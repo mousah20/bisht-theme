@@ -23,14 +23,18 @@
   --bs-bone: #ede7dc;
   --bs-bone-dim: #a9a398;
   --bs-mute: #6e6a61;
-  --bs-brass: #8a7a55;
-  --bs-brass-hi: #c4ae7c;
+  /* لوحة الوان سلة تضبط ‎--color-primary‎. النحاس يرثه فلو غيّره التاجر
+     تغيّر العنصر الوحيد الذي يلمع في الثيم كله معه. */
+  --bs-brass: var(--color-primary, #8a7a55);
+  --bs-brass-hi: var(--color-primary-dark, #c4ae7c);
   --bs-oxblood: #5b1f26;
   --bs-line: rgba(138, 122, 85, 0.22);
 
-  /* الخطوط: العربية لغة العرض واللاتينية لغة الحاشية */
-  --bs-display: 'Bisht Display', 'Noto Naskh Arabic', 'Traditional Arabic', serif;
-  --bs-ui: 'Bisht UI', 'Noto Kufi Arabic', system-ui, sans-serif;
+  /* الخطوط: العربية لغة العرض واللاتينية لغة الحاشية.
+     ‼ لوحة خطوط سلة تضبط ‎--font-main‎ و‎--font-secondary‎. لو لم نرثهما هنا
+     بدت اللوحة عاملة عند التاجر وهي لا تغير شيئا — فنرثهما بافتراضي لنا. */
+  --bs-display: var(--font-secondary, var(--font-main, 'Noto Naskh Arabic', 'Traditional Arabic', serif));
+  --bs-ui: var(--font-main, 'Noto Kufi Arabic', system-ui, sans-serif);
   --bs-mono: ui-monospace, 'Cascadia Mono', 'Consolas', monospace;
 
   /* الايقاع: سلم مساحات واحد يُستعمل في كل مكان */

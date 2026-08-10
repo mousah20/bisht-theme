@@ -1,0 +1,17 @@
+{#
+  بشوت مختارة.
+  | title | ?string |
+  | products | collection of ids |
+
+  يستعمل مصدر sales او selected من سلة، فالتاجر يختار بنفسه.
+#}
+<section class="bs-col bs-pad bs-rise" data-testid="store-home-picked">
+    <div class="bs-col__head" style="margin-block-end:1.6rem">
+        <h2>{{ title ?: trans('bisht.all_bishts') }}</h2>
+        {% if note %}<span>{{ note }}</span>{% endif %}
+    </div>
+    <salla-products-list source="{{ source ?: 'selected' }}"
+                         source-value="{{ products ? products|json_encode : '' }}"
+                         limit="{{ limit|default(6) }}"
+                         data-testid="store-home-picked-list"></salla-products-list>
+</section>

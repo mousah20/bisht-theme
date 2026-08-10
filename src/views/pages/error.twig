@@ -1,0 +1,34 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+{#
+  صفحة الخطأ لا تعتذر بل تخرج الزائر: ثلاثة مسارات واضحة.
+  «نأسف» وحدها تجعله يغلق التبويب.
+#}
+<section class="bs-article bs-pad" data-testid="store-error">
+    <header class="bs-article__head">
+        <p class="bs-eyebrow bs-num">{{ error.code ?? 404 }}</p>
+        <h1 class="bs-article__title">
+            {{ error.code == 404 ? 'الصفحة انتقلت او لم تكن' : 'حدث خطأ' }}
+        </h1>
+        <p class="bs-lede" style="margin-inline:auto;margin-block-start:1rem">
+            {{ error.message ?? 'ابدأ من احد هذه المسارات.' }}
+        </p>
+    </header>
+
+    <div style="max-width:65ch;margin-inline:auto;display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center">
+        <a href="{{ store.url }}" class="bs-btn">
+            {{ trans('bisht.cover') }}
+            <i>{% include 'components/icons/door.twig' %}</i>
+        </a>
+        <a href="{{ url('products') }}" class="bs-btn bs-btn--ghost">
+            {{ trans('bisht.all_bishts') }}
+            <i>{% include 'components/icons/door.twig' %}</i>
+        </a>
+        <a href="{{ url('page', {slug: 'size-guide'}) }}" class="bs-btn bs-btn--ghost">
+            {{ trans('bisht.size_guide') }}
+            <i>{% include 'components/icons/door.twig' %}</i>
+        </a>
+    </div>
+</section>
+{% endblock %}

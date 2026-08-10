@@ -1,0 +1,12 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+<section class="bs-secs bs-pad" data-testid="store-search-page">
+    <div class="bs-secs__head bs-rise">
+        <h1>{{ page.title }}</h1>
+        {% if keyword %}<span>{{ keyword }}</span>{% endif %}
+    </div>
+    <salla-products-list source="search" source-value="{{ keyword }}"
+                         data-testid="store-search-results"></salla-products-list>
+</section>
+{% endblock %}

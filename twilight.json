@@ -399,6 +399,111 @@
                     "required": false
                 }
             ]
+        },
+        {
+            "key": "4d7f8a92-3b16-4c54-a9e7-8f2b5d6c1a34",
+            "title": {
+                "ar": "بشوت مختارة",
+                "en": "Picked bishts"
+            },
+            "icon": "sicon-products",
+            "path": "home.picked",
+            "is_default": true,
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "format": "text",
+                    "label": {
+                        "ar": "العنوان",
+                        "en": "Title"
+                    },
+                    "value": "بشوت مختارة",
+                    "required": false
+                },
+                {
+                    "id": "note",
+                    "type": "string",
+                    "format": "text",
+                    "label": {
+                        "ar": "سطر جانبي",
+                        "en": "Side note"
+                    },
+                    "value": "",
+                    "required": false
+                },
+                {
+                    "id": "source",
+                    "type": "items",
+                    "format": "dropdown-list",
+                    "label": {
+                        "ar": "المصدر",
+                        "en": "Source"
+                    },
+                    "description": {
+                        "ar": "المخفضة تعرض ما عليه خصم فعلي، والمختارة تعرض ما تحدده انت.",
+                        "en": "Sales shows actually discounted items. Selected shows what you pick."
+                    },
+                    "value": "selected",
+                    "options": [
+                        {
+                            "value": "selected",
+                            "label": {
+                                "ar": "منتجات اخترتها",
+                                "en": "Products you pick"
+                            }
+                        },
+                        {
+                            "value": "sales",
+                            "label": {
+                                "ar": "المخفضة",
+                                "en": "On sale"
+                            }
+                        },
+                        {
+                            "value": "latest",
+                            "label": {
+                                "ar": "الاحدث",
+                                "en": "Latest"
+                            }
+                        },
+                        {
+                            "value": "top-rated",
+                            "label": {
+                                "ar": "الاعلى تقييما",
+                                "en": "Top rated"
+                            }
+                        }
+                    ],
+                    "required": false
+                },
+                {
+                    "id": "products",
+                    "type": "collection",
+                    "format": "products",
+                    "label": {
+                        "ar": "المنتجات",
+                        "en": "Products"
+                    },
+                    "description": {
+                        "ar": "تُستعمل مع «منتجات اخترتها» فقط.",
+                        "en": "Used with the picked source only."
+                    },
+                    "value": [],
+                    "required": false
+                },
+                {
+                    "id": "limit",
+                    "type": "number",
+                    "format": "number",
+                    "label": {
+                        "ar": "العدد",
+                        "en": "Count"
+                    },
+                    "value": 6,
+                    "required": false
+                }
+            ]
         }
     ],
     "support_url": "https://mousah20.github.io/salla-themes-support/bisht.html",

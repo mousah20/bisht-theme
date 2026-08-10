@@ -1,0 +1,35 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+<section class="bs-secs bs-pad" data-testid="store-category">
+    <salla-breadcrumb data-testid="store-breadcrumb"></salla-breadcrumb>
+
+    <div class="bs-secs__head bs-rise">
+        <h1>{{ category.name }}</h1>
+        {% if category.products_count %}<span class="bs-num">{{ category.products_count }}</span>{% endif %}
+    </div>
+
+    {% if category.description %}
+        <p class="bs-lede bs-rise" style="margin-block-end:2rem">{{ category.description|striptags }}</p>
+    {% endif %}
+
+    <salla-filters data-testid="store-filters"></salla-filters>
+
+    {# التصنيفات الفرعية تظهر كاقسام لا كقائمة نصية #}
+    {% if category.sub_categories|length %}
+        <div class="bs-grid" style="margin-block-end:3rem">
+            {% for sub in category.sub_categories %}
+                <a href="{{ sub.url }}" class="bs-rise" data-curtain>
+                    <div class="bs-card">
+                        {% if sub.image %}<img src="{{ sub.image }}" alt="{{ sub.name }}" loading="lazy">{% endif %}
+                        <div class="bs-card__t"><b>{{ sub.name }}</b></div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <salla-products-list source="categories" source-value="[{{ category.id }}]"
+                         data-testid="store-category-products"></salla-products-list>
+</section>
+{% endblock %}
