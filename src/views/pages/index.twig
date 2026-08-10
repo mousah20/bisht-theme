@@ -13,13 +13,14 @@
 
 {% block content %}
 {% set land   = theme.settings.get('bs_landing_enabled', true) %}
-{% set img1   = theme.settings.get('bs_landing_image_1') %}
-{% set img2   = theme.settings.get('bs_landing_image_2') %}
+{# افتراضي مدمج: الثيم يبدو كاملا قبل ان يضبط التاجر شيئا #}
+{% set img1   = theme.settings.get('bs_landing_image_1') ?: 'images/cover-1.jpg'|asset %}
+{% set img2   = theme.settings.get('bs_landing_image_2') ?: 'images/cover-2.jpg'|asset %}
 {% set t1     = theme.settings.get('bs_landing_title', 'اصالة تلبس') %}
 {% set t2     = theme.settings.get('bs_landing_title_2', 'وفخامة تورث') %}
 {% set sub    = theme.settings.get('bs_landing_sub') %}
 
-{% if land and img1 %}
+{% if land %}
 {# ══════════ الغلاف ══════════ #}
 <section class="bs-land" data-land data-testid="store-landing">
     <div class="bs-land__media" data-slides>
@@ -65,9 +66,21 @@
         <span>{{ store.name }}</span>
     </div>
 
+    {#
+      ‼ لا نعتمد مفتاح main_menu وحده: متاجر سلة تسمي قوائمها بمعرفات مختلفة،
+      فلو غاب المفتاح خرجت الشبكة فارغة بلا خطأ. نجمع اول قائمة فيها عناصر.
+    #}
+    {% set menus = store.settings.menus ?? {} %}
+    {% set nav = menus.main_menu.items ?? [] %}
+    {% if nav is empty %}
+        {% for m in menus %}
+            {% if nav is empty and m.items is defined and m.items|length %}{% set nav = m.items %}{% endif %}
+        {% endfor %}
+    {% endif %}
+
     <div class="bs-grid">
-        {% for item in store.settings.menus.main_menu.items %}
-            {% if item.resource_type == 'category' %}
+        {% for item in nav %}
+            {% if item.resource_type == 'category' or item.type == 'category' %}
                 <a href="{{ item.url }}" data-curtain class="bs-rise">
                     <div class="bs-card">
                         {% if item.image %}<img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">{% endif %}

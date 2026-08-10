@@ -49,3 +49,74 @@ input, select, textarea {
 
   &::placeholder { color: var(--bs-mute); }
 }
+
+
+/* ============================================================
+   بطاقات سلة: خصوصية اعلى لان مكوناتها تكتب انماطها الخاصة.
+   نستهدف الجذر والحاوية معا، ونثبت الالوان على مستوى الخصائص المخصصة
+   حتى ترثها الاجزاء الداخلية بلا !important على كل قاعدة.
+   ============================================================ */
+salla-products-list,
+salla-products-slider,
+custom-salla-product-card,
+salla-product-card {
+  --salla-color-background: var(--bs-ink-3);
+  --salla-color-text: var(--bs-bone);
+  --salla-color-border: var(--bs-line);
+  display: block;
+}
+
+/* الشبكة: مسافات بشت لا مسافات رائد */
+salla-products-list::part(list),
+.s-products-list-wrapper {
+  gap: var(--bs-s3) !important;
+}
+
+/* البطاقة */
+.s-product-card-entry,
+custom-salla-product-card .s-product-card-entry {
+  background: var(--bs-ink-3) !important;
+  border: 0 !important;
+  border-radius: var(--bs-r-md) !important;
+  box-shadow: inset 0 0 0 1px var(--bs-line) !important;
+  overflow: hidden;
+}
+
+.s-product-card-image img { border-radius: 0 !important; }
+
+.s-product-card-content { padding: var(--bs-s3) !important; }
+
+.s-product-card-content-title,
+.s-product-card-content-title a {
+  color: var(--bs-bone) !important;
+  font-family: var(--bs-display) !important;
+  font-size: 1.05rem !important;
+  text-decoration: none !important;
+}
+
+.s-product-card-price,
+.s-product-card-content-price { color: var(--bs-bone) !important; font-variant-numeric: tabular-nums; }
+.s-product-card-sale-price { color: var(--bs-brass-hi) !important; }
+.s-product-card-full-price { color: var(--bs-mute) !important; }
+
+/* زر الاضافة يتبع حبة بشت */
+.s-product-card-content-footer .s-button-element,
+salla-add-product-button::part(button) {
+  border-radius: 999px !important;
+  background: var(--bs-bone) !important;
+  color: var(--bs-ink) !important;
+  border: 0 !important;
+  font-family: var(--bs-ui) !important;
+}
+
+/* نفد الكمية: نعلنه ولا نخفيه */
+.s-product-card-out-of-stock,
+.s-product-card-promotion-title {
+  background: rgb(91 31 38 / 55%) !important;
+  color: #d6a0a0 !important;
+  font-family: var(--bs-mono) !important;
+  letter-spacing: .1em;
+}
+
+/* المفضلة */
+.s-product-card-wishlist-btn { background: rgb(9 10 14 / 55%) !important; color: var(--bs-bone) !important; }
