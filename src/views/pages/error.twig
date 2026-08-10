@@ -19,15 +19,15 @@
     <div style="max-width:65ch;margin-inline:auto;display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center">
         <a href="{{ store.url }}" class="bs-btn">
             {{ trans('bisht.cover') }}
-            <i>{% include 'components/icons/door.twig' %}</i>
+            <i>{% include 'components.icons.door' %}</i>
         </a>
         <a href="{{ url('products') }}" class="bs-btn bs-btn--ghost">
             {{ trans('bisht.all_bishts') }}
-            <i>{% include 'components/icons/door.twig' %}</i>
+            <i>{% include 'components.icons.door' %}</i>
         </a>
         <a href="{{ url('page', {slug: 'size-guide'}) }}" class="bs-btn bs-btn--ghost">
             {{ trans('bisht.size_guide') }}
-            <i>{% include 'components/icons/door.twig' %}</i>
+            <i>{% include 'components.icons.door' %}</i>
         </a>
     </div>
 </section>
