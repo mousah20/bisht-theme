@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll("[data-card-sizes]").forEach(e=>{const t=(e.dataset.cardSizes||"").split(",").map(e=>e.trim()).filter(Boolean);t.length&&(e.textContent=t.length>3?t.slice(0,3).join(" · ")+" +"+(t.length-3):t.join(" · "))})});

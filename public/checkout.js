@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll("[data-fit-reminder]").forEach(e=>{e.hidden=!1})});

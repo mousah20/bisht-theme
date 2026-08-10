@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll("[data-menu-toggle]").forEach(e=>{e.addEventListener("click",()=>{const t=e.nextElementSibling;if(!t)return;const n="true"===e.getAttribute("aria-expanded");e.setAttribute("aria-expanded",String(!n)),t.hidden=n})})});
