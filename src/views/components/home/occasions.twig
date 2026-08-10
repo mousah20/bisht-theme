@@ -1,0 +1,27 @@
+{#
+  التصفح بالمناسبة.
+  | title | ?string | عنوان القسم |
+  | items | collection | مناسبة: عنوان وصورة ورابط تصنيف |
+
+  البشت يُشترى بالمناسبة لا باللون — هذا ما يسأله العميل اولا.
+#}
+<section class="bs-secs bs-pad" data-testid="store-home-occasions">
+    <div class="bs-secs__head bs-rise">
+        <h2>{{ title ?: trans('bisht.occasions') }}</h2>
+        {% if description %}<span>{{ description }}</span>{% endif %}
+    </div>
+
+    <div class="bs-grid">
+        {% for item in items %}
+            <a href="{{ item.url }}" class="bs-rise" data-curtain>
+                <div class="bs-card">
+                    {% if item.image %}<img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">{% endif %}
+                    <div class="bs-card__t">
+                        {% if item.note %}<span>{{ item.note }}</span>{% endif %}
+                        <b>{{ item.title }}</b>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</section>

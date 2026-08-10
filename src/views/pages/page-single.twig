@@ -1,0 +1,22 @@
+{% extends "layouts.master" %}
+
+{% block head_scripts %}
+    {# صفحة دليل القياس تحتاج المحرك، وباقي الصفحات لا #}
+    {% if page.slug == 'size-guide' %}<script defer src="{{ 'size-guide.js'|asset }}"></script>{% endif %}
+{% endblock %}
+
+{% block content %}
+<article class="bs-article bs-pad" data-testid="store-page-single">
+    <header class="bs-article__head">
+        <h1 class="bs-article__title">{{ page.title }}</h1>
+    </header>
+
+    <div class="bs-prose">{{ page.content|raw }}</div>
+
+    {% if page.slug == 'size-guide' %}
+        <div style="max-width:65ch;margin-inline:auto;margin-block-start:2.6rem">
+            {% include 'components/size-guide.twig' %}
+        </div>
+    {% endif %}
+</article>
+{% endblock %}

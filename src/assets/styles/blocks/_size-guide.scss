@@ -1,0 +1,78 @@
+/* دليل القياس: ثلاث خطوات تنتهي بمقاس واحد لا بجدول يُقرأ */
+.bs-fit {
+  padding: var(--bs-s2);
+  border-radius: var(--bs-r-lg);
+  background: rgb(237 231 220 / 4%);
+  box-shadow: inset 0 1px 0 rgb(237 231 220 / 9%);
+}
+
+.bs-fit__in {
+  border-radius: calc(var(--bs-r-lg) - var(--bs-s2));
+  background: var(--bs-ink-3);
+  padding: var(--bs-s5) var(--bs-s4);
+}
+
+.bs-fit__steps {
+  display: grid;
+  gap: var(--bs-s4);
+  counter-reset: bs-step;
+}
+
+.bs-fit__step {
+  display: grid;
+  gap: var(--bs-s2);
+
+  &::before {
+    counter-increment: bs-step;
+    content: counter(bs-step, arabic-indic);
+    font-family: var(--bs-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--bs-brass);
+  }
+
+  label { font-size: 0.92rem; }
+}
+
+.bs-fit__opts { display: flex; gap: var(--bs-s1); flex-wrap: wrap; }
+
+.bs-fit__opts button {
+  padding: 0.55rem 1rem;
+  border: 0;
+  border-radius: var(--bs-r-sm);
+  background: rgb(237 231 220 / 6%);
+  color: var(--bs-bone-dim);
+  font-family: var(--bs-mono);
+  font-size: 0.72rem;
+  box-shadow: inset 0 0 0 1px rgb(237 231 220 / 13%);
+  transition: background 0.4s var(--bs-e), color 0.4s var(--bs-e);
+
+  &[aria-pressed='true'] { background: var(--bs-brass-hi); color: var(--bs-ink); box-shadow: none; }
+}
+
+/* النتيجة: رقم كبير لا جملة */
+.bs-fit__out {
+  margin-block-start: var(--bs-s5);
+  padding-block-start: var(--bs-s4);
+  border-block-start: 1px dashed var(--bs-line);
+  display: grid;
+  gap: var(--bs-s1);
+
+  span { font-family: var(--bs-mono); font-size: 0.6rem; letter-spacing: 0.2em; color: var(--bs-mute); }
+  strong { font-family: var(--bs-display); font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 400; }
+  em { font-style: normal; color: var(--bs-bone-dim); font-size: 0.88rem; }
+}
+
+/* جدول المقاسات الكامل: يبقى متاحا لمن يريد الارقام */
+.bs-fit__table {
+  inline-size: 100%;
+  border-collapse: collapse;
+  margin-block-start: var(--bs-s4);
+  font-family: var(--bs-mono);
+  font-size: 0.72rem;
+
+  th, td { text-align: start; padding: 0.6rem 0.8rem; border-block-end: 1px dashed var(--bs-line); }
+  th { color: var(--bs-mute); font-weight: 400; letter-spacing: 0.12em; font-size: 0.6rem; text-transform: uppercase; }
+  td { color: var(--bs-bone); font-variant-numeric: tabular-nums; }
+  tr[data-fit='true'] td { color: var(--bs-brass-hi); }
+}

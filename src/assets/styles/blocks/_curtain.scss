@@ -1,0 +1,68 @@
+/* الستارة: صورة بشت واحدة مقطعة على سبع ثنيات، تتجمع وهي تنزل.
+   تُسدل اثناء التحميل الفعلي فتغطي زمنه — لا فوق انتقال فوري. */
+.bs-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  display: flex;
+  pointer-events: none;
+}
+
+.bs-fold {
+  position: relative;
+  flex: 1 1 0;
+  transform: translate3d(0, -101%, 0);
+  will-change: transform;
+  background-image: var(--bs-cloth);
+  background-size: 700% 100%;
+  background-repeat: no-repeat;
+  background-color: var(--bs-ink-3);
+
+  /* ظل الثنية */
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgb(0 0 0 / 42%), rgb(255 255 255 / 5%) 46%, rgb(0 0 0 / 34%));
+  }
+
+  /* حاشية القصب على الحد السفلي */
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    block-size: 2px;
+    background: linear-gradient(90deg, transparent, var(--bs-brass-hi), transparent);
+    box-shadow: 0 0 18px rgb(196 174 124 / 70%);
+  }
+
+  &:nth-child(1) { background-position: 0% 0; }
+  &:nth-child(2) { background-position: 16.666% 0; }
+  &:nth-child(3) { background-position: 33.333% 0; }
+  &:nth-child(4) { background-position: 50% 0; }
+  &:nth-child(5) { background-position: 66.666% 0; }
+  &:nth-child(6) { background-position: 83.333% 0; }
+  &:nth-child(7) { background-position: 100% 0; }
+
+  &:nth-child(odd) { filter: brightness(0.9); }
+  &:nth-child(3n) { filter: brightness(1.08); }
+}
+
+.bs-curtain.is-down .bs-fold { animation: bs-drop var(--bs-d, 680ms) var(--bs-fall) forwards; }
+.bs-curtain.is-up .bs-fold { animation: bs-lift var(--bs-d, 580ms) var(--bs-e) forwards; }
+
+@keyframes bs-drop {
+  0% { transform: translate3d(0, -101%, 0); }
+  84% { transform: translate3d(0, 1.6%, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+@keyframes bs-lift {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(0, -101%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bs-curtain { display: none; }
+}

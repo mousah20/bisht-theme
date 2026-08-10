@@ -1,0 +1,9 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+<section class="bs-article bs-pad" data-testid="store-landing-page">
+    {% for component in page.components %}
+        {{ component.render() }}
+    {% endfor %}
+</section>
+{% endblock %}

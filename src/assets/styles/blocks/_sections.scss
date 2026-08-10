@@ -1,0 +1,108 @@
+/* الاقسام: شبكة غير متناظرة، البطاقة الاولى بمساحة مضاعفة */
+.bs-secs { padding-block: 8.5rem var(--bs-s4); }
+
+.bs-secs__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--bs-s4);
+  flex-wrap: wrap;
+  margin-block-end: var(--bs-s5);
+
+  h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
+
+  span {
+    font-family: var(--bs-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--bs-mute);
+  }
+}
+
+.bs-grid { display: grid; gap: var(--bs-s3); }
+
+@media (min-width: 700px) { .bs-grid { grid-template-columns: repeat(2, 1fr); } }
+
+@media (min-width: 1050px) {
+  .bs-grid { grid-template-columns: repeat(4, 1fr); }
+  .bs-grid > a:first-child { grid-column: span 2; grid-row: span 2; }
+}
+
+.bs-card {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-block-size: 230px;
+  overflow: hidden;
+  border-radius: var(--bs-r-md);
+  background: var(--bs-ink-2);
+  transition: transform 0.7s var(--bs-e);
+
+  img {
+    position: absolute;
+    inset: 0;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    transition: transform 1.5s var(--bs-e);
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgb(10 12 16 / 94%), rgb(10 12 16 / 15%) 62%);
+  }
+
+  &:hover { transform: translateY(-4px); }
+  &:hover img { transform: scale(1.05); }
+}
+
+.bs-grid > a:first-child .bs-card { min-block-size: 480px; }
+
+.bs-card__t {
+  position: relative;
+  z-index: 2;
+  padding: var(--bs-s3) var(--bs-s4);
+
+  span {
+    display: block;
+    font-family: var(--bs-mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.18em;
+    color: var(--bs-brass-hi);
+    margin-block-end: 0.5rem;
+  }
+
+  b { display: block; font-family: var(--bs-display); font-size: 1.5rem; font-weight: 400; }
+}
+
+.bs-grid > a:first-child .bs-card__t b { font-size: clamp(1.8rem, 3vw, 2.5rem); }
+
+/* شريط كامل النزف بين الاقسام */
+.bs-band {
+  position: relative;
+  block-size: min(52vh, 380px);
+  overflow: hidden;
+  margin-block-start: var(--bs-s6);
+
+  img { inline-size: 100%; block-size: 100%; object-fit: cover; object-position: 50% 55%; }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(270deg, rgb(15 17 22 / 92%), transparent 58%);
+  }
+}
+
+.bs-band__cap {
+  position: absolute;
+  z-index: 2;
+  inset-block-end: var(--bs-s5);
+  inset-inline-start: var(--bs-pad);
+  max-width: 32ch;
+
+  h3 { font-size: clamp(1.6rem, 3.6vw, 2.6rem); }
+  p { color: var(--bs-bone-dim); margin-block: var(--bs-s2) 0; font-size: 0.92rem; }
+}

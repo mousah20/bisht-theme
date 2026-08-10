@@ -1,0 +1,12 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+<section class="bs-article bs-pad" data-testid="store-loyalty">
+    <header class="bs-article__head">
+        <h1 class="bs-article__title">{{ page.title }}</h1>
+    </header>
+    <div style="max-width:70ch;margin-inline:auto">
+        <salla-loyalty data-testid="store-loyalty-widget"></salla-loyalty>
+    </div>
+</section>
+{% endblock %}

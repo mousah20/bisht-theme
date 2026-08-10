@@ -1,0 +1,16 @@
+{#
+  القياس اولا.
+  | title | ?string |
+  | text  | ?string |
+
+  يضع حاسبة القياس في الرئيسية لان اكبر سبب ارجاع في البشوت هو المقاس،
+  فالمتجر يسأل قبل ان يعرض.
+#}
+<section class="bs-col bs-pad bs-rise" data-testid="store-home-fit">
+    <div class="bs-col__head" style="margin-block-end:1.6rem">
+        <h2>{{ title ?: trans('bisht.size_guide') }}</h2>
+        <span>{{ trans('bisht.length') }} · {{ trans('bisht.shoulder') }}</span>
+    </div>
+    {% if text %}<p class="bs-lede" style="margin-block-end:1.6rem">{{ text }}</p>{% endif %}
+    {% include 'components/size-guide.twig' %}
+</section>

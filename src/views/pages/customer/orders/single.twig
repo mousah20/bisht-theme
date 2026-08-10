@@ -1,0 +1,5 @@
+{% extends "layouts.customer" %}
+
+{% block customer_content %}
+    <salla-order-details order-id="{{ order.id }}" data-testid="store-order-single"></salla-order-details>
+{% endblock %}

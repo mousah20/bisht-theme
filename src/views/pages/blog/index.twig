@@ -1,0 +1,25 @@
+{% extends "layouts.master" %}
+
+{% block head_scripts %}<script defer src="{{ 'blog.js'|asset }}"></script>{% endblock %}
+
+{% block content %}
+<section class="bs-blog bs-pad" data-testid="store-blog-index">
+    <div class="bs-secs__head bs-rise">
+        <h1>{{ trans('bisht.blog') }}</h1>
+        <span>{{ store.name }}</span>
+    </div>
+
+    <div class="bs-blog__list">
+        {% for article in articles %}
+            <a href="{{ article.url }}" class="bs-post bs-rise" data-curtain>
+                {% if article.image %}
+                    <div class="bs-post__media"><img src="{{ article.image }}" alt="{{ article.title }}" loading="lazy"></div>
+                {% endif %}
+                <p class="bs-post__meta bs-num">{{ article.date }}{% if article.read_time %} · {{ article.read_time }} {{ trans('bisht.reading') }}{% endif %}</p>
+                <h2 class="bs-post__title">{{ article.title }}</h2>
+                {% if article.excerpt %}<p class="bs-post__excerpt">{{ article.excerpt|striptags|slice(0, 150) }}</p>{% endif %}
+            </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

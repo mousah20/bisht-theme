@@ -1,0 +1,100 @@
+{% extends "layouts.master" %}
+
+{% block head_scripts %}
+    <script defer src="{{ 'home.js'|asset }}"></script>
+{% endblock %}
+
+{% block header %}
+    {# على الغلاف لا رأس: الغلاف صفحة دخول لا صفحة متجر #}
+    {% if not theme.settings.get('bs_landing_enabled', true) %}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+{% set land   = theme.settings.get('bs_landing_enabled', true) %}
+{% set img1   = theme.settings.get('bs_landing_image_1') %}
+{% set img2   = theme.settings.get('bs_landing_image_2') %}
+{% set t1     = theme.settings.get('bs_landing_title', 'اصالة تلبس') %}
+{% set t2     = theme.settings.get('bs_landing_title_2', 'وفخامة تورث') %}
+{% set sub    = theme.settings.get('bs_landing_sub') %}
+
+{% if land and img1 %}
+{# ══════════ الغلاف ══════════ #}
+<section class="bs-land" data-land data-testid="store-landing">
+    <div class="bs-land__media" data-slides>
+        <img class="is-on" src="{{ img1 }}" alt="{{ store.name }}" fetchpriority="high">
+        {% if img2 %}<img src="{{ img2 }}" alt="{{ store.name }}" loading="lazy">{% endif %}
+    </div>
+
+    {# الشمس تمر مرة واحدة، والالواح ترتفع كما تُرفع طبقات القماش #}
+    <div class="bs-sun" aria-hidden="true"></div>
+    <div class="bs-reveal" aria-hidden="true">
+        <b></b><b></b><b></b><b></b><b></b><b></b><b></b>
+    </div>
+
+    <div class="bs-land__body">
+        <p class="bs-eyebrow">{{ store.name }}{% if store.slogan %} · {{ store.slogan }}{% endif %}</p>
+        <h1 class="bs-land__h">{{ t1 }}<em>{{ t2 }}</em></h1>
+        {% if sub %}<p class="bs-land__p">{{ sub }}</p>{% endif %}
+
+        <a href="{{ store.url }}#bs-sections" class="bs-btn" data-land-enter style="margin-block-start:2.6rem;width:fit-content">
+            {{ trans('bisht.enter_store') }}
+            <i>{% include 'components/icons/door.twig' %}</i>
+        </a>
+    </div>
+
+    {% if img2 %}
+        <div class="bs-dots" role="group" aria-label="{{ trans('bisht.cover') }}">
+            <button data-slide-dot="0" aria-pressed="true"></button>
+            <button data-slide-dot="1" aria-pressed="false"></button>
+        </div>
+    {% endif %}
+
+    <div class="bs-land__foot">
+        <span>{{ trans('bisht.bespoke') }}</span>
+        {% if store.contacts.whatsapp %}<span>{{ trans('bisht.bespoke_cta') }}</span>{% endif %}
+    </div>
+</section>
+{% endif %}
+
+{# ══════════ الاقسام ══════════ #}
+<section class="bs-secs bs-pad" id="bs-sections" data-testid="store-sections">
+    <div class="bs-secs__head bs-rise">
+        <h1>{{ trans('bisht.sections') }}</h1>
+        <span>{{ store.name }}</span>
+    </div>
+
+    <div class="bs-grid">
+        {% for item in store.settings.menus.main_menu.items %}
+            {% if item.resource_type == 'category' %}
+                <a href="{{ item.url }}" data-curtain class="bs-rise">
+                    <div class="bs-card">
+                        {% if item.image %}<img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">{% endif %}
+                        <div class="bs-card__t">
+                            <span>{{ loop.index }}</span>
+                            <b>{{ item.title }}</b>
+                        </div>
+                    </div>
+                </a>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+
+{# ══════════ المناسبات ══════════ #}
+{% if theme.settings.get('bs_occasions_enabled', true) %}
+<section class="bs-col bs-pad" data-testid="store-occasions">
+    <div class="bs-col__head bs-rise">
+        <h2>{{ trans('bisht.occasions') }}</h2>
+        <span>{{ trans('bisht.size_guide') }}</span>
+    </div>
+    <salla-products-list source="latest" limit="4" data-testid="store-occasions-list"></salla-products-list>
+</section>
+{% endif %}
+
+{# ══════════ عناصر التاجر القابلة للتخصيص ══════════ #}
+{% for component in page.components %}
+    {{ component.render() }}
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{#
+  حكاية الورشة.
+  | title | ?string |
+  | text  | ?string |
+  | image | ?string | صورة كاملة النزف |
+
+  البشت الغالي يُشترى بالحكاية. هذا القسم يبرر السعر بلا كلمة عن السعر.
+#}
+<section class="bs-band bs-rise" data-testid="store-home-workshop">
+    {% if image %}<img src="{{ image }}" alt="{{ title }}" loading="lazy">{% endif %}
+    <div class="bs-band__cap">
+        <h3>{{ title ?: trans('bisht.workshop') }}</h3>
+        {% if text %}<p>{{ text }}</p>{% endif %}
+    </div>
+</section>

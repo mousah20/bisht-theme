@@ -1,0 +1,141 @@
+/* الغلاف: صفحة دخول كاملة الشاشة قبل المتجر */
+.bs-land {
+  position: relative;
+  min-block-size: 100dvh;
+  display: grid;
+  overflow: hidden;
+  background: var(--bs-ink-2);
+}
+
+.bs-land__media { position: absolute; inset: 0; }
+
+.bs-land__media img {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.5s var(--bs-e);
+
+  &.is-on { opacity: 1; }
+}
+
+/* التعتيم على جهة النص: عربي فالنص يمين */
+.bs-land__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(270deg, rgb(10 12 16 / 93%) 0%, rgb(10 12 16 / 66%) 34%, rgb(10 12 16 / 6%) 68%),
+    linear-gradient(0deg, rgb(10 12 16 / 90%), transparent 48%),
+    linear-gradient(180deg, rgb(10 12 16 / 55%), transparent 26%);
+}
+
+/* الواح الكشف: ترتفع كما تُرفع طبقات القماش */
+.bs-reveal { position: absolute; inset: 0; z-index: 2; display: flex; pointer-events: none; }
+
+.bs-reveal b {
+  flex: 1 1 0;
+  background: var(--bs-ink-2);
+  will-change: transform;
+  animation: bs-bandup 1.25s cubic-bezier(0.22, 0.68, 0, 1) forwards;
+}
+
+@keyframes bs-bandup { to { transform: translate3d(0, -101%, 0); } }
+
+/* الشمس تمر مرة واحدة */
+.bs-sun {
+  position: absolute;
+  inset: -25% -70%;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  background: linear-gradient(102deg, transparent 40%, rgb(255 238 200 / 95%) 50%, transparent 60%);
+  transform: translate3d(55%, 0, 0);
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: bs-sunpass 3s cubic-bezier(0.4, 0.05, 0.35, 1) 1.15s forwards;
+}
+
+@keyframes bs-sunpass {
+  0% { transform: translate3d(55%, 0, 0); opacity: 0; }
+  18% { opacity: 0.85; }
+  82% { opacity: 0.55; }
+  100% { transform: translate3d(-55%, 0, 0); opacity: 0; }
+}
+
+.bs-land__body {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  align-content: center;
+  inline-size: 100%;
+  max-width: 1400px;
+  margin-inline: auto;
+  padding-inline: var(--bs-pad);
+}
+
+.bs-land__h {
+  font-size: clamp(3.2rem, 10vw, 8.5rem);
+  line-height: 0.94;
+  letter-spacing: -0.015em;
+  margin-block-start: var(--bs-s3);
+
+  em { display: block; font-style: normal; color: var(--bs-brass); }
+}
+
+/* الكشف كلمة كلمة من قناع */
+.bs-wl { display: inline-block; overflow: hidden; vertical-align: top; padding-block-end: 0.06em; }
+
+.bs-wd {
+  display: inline-block;
+  transform: translateY(105%) rotate(4deg);
+  opacity: 0;
+  animation: bs-wordin 1.15s var(--bs-e) forwards;
+}
+
+@keyframes bs-wordin { to { transform: none; opacity: 1; } }
+
+.bs-land__p { color: var(--bs-bone-dim); max-width: 32ch; margin-block-start: var(--bs-s4); }
+
+.bs-land__foot {
+  position: absolute;
+  z-index: 3;
+  inset-block-end: 1.6rem;
+  inset-inline: var(--bs-pad);
+  display: flex;
+  justify-content: space-between;
+  gap: var(--bs-s3);
+  flex-wrap: wrap;
+  font-family: var(--bs-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  color: var(--bs-mute);
+}
+
+.bs-dots {
+  position: absolute;
+  z-index: 3;
+  inset-block-end: 5.2rem;
+  inset-inline-end: var(--bs-pad);
+  display: flex;
+  gap: 0.5rem;
+}
+
+.bs-dots button {
+  inline-size: 2.1rem;
+  block-size: 2px;
+  border: 0;
+  border-radius: 2px;
+  background: rgb(237 231 220 / 28%);
+  transition: background 0.6s var(--bs-e), transform 0.6s var(--bs-e);
+
+  &[aria-pressed='true'] { background: var(--bs-brass-hi); transform: scaleY(2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bs-reveal, .bs-sun { display: none; }
+  .bs-wd { transform: none; opacity: 1; animation: none; }
+  .bs-land__media img { opacity: 1; }
+}

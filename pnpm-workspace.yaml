@@ -1,0 +1,8 @@
+allowBuilds:
+  '@parcel/watcher': true
+  bufferutil: false
+  es5-ext: false
+  utf-8-validate: false
+# pnpm 11 defaults minimumReleaseAge to 24h; Salla ships same-day official releases.
+minimumReleaseAgeExclude:
+  - "@salla.sa/*"

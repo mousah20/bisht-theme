@@ -1,0 +1,76 @@
+/* المدونة: مقال يُقرأ لا بطاقة تُمسح — عمود قراءة واحد بعرض ٦٥ محرفا */
+.bs-blog { padding-block: 8.5rem var(--bs-s6); }
+
+.bs-blog__list { display: grid; gap: var(--bs-s5); margin-block-start: var(--bs-s5); }
+
+@media (min-width: 820px) { .bs-blog__list { grid-template-columns: repeat(2, 1fr); gap: var(--bs-s6); } }
+
+.bs-post {
+  display: grid;
+  gap: var(--bs-s3);
+  padding-block-end: var(--bs-s5);
+  border-block-end: 1px solid var(--bs-line);
+
+  &__media {
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+    border-radius: var(--bs-r-md);
+    background: var(--bs-ink-2);
+
+    img { inline-size: 100%; block-size: 100%; object-fit: cover; transition: transform 1.4s var(--bs-e); }
+  }
+
+  &:hover &__media img, &:hover .bs-post__media img { transform: scale(1.04); }
+
+  &__meta {
+    font-family: var(--bs-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.18em;
+    color: var(--bs-mute);
+  }
+
+  &__title { font-size: clamp(1.3rem, 2.4vw, 1.8rem); }
+  &__excerpt { color: var(--bs-bone-dim); font-size: 0.92rem; }
+}
+
+/* المقال */
+.bs-article { padding-block: 8.5rem var(--bs-s7); }
+
+.bs-article__head { max-width: 60ch; margin-inline: auto; text-align: center; }
+
+.bs-article__title { font-size: clamp(2rem, 5vw, 3.4rem); margin-block: var(--bs-s3); }
+
+.bs-article__hero {
+  margin-block: var(--bs-s6);
+  border-radius: var(--bs-r-lg);
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+
+  img { inline-size: 100%; block-size: 100%; object-fit: cover; }
+}
+
+.bs-prose {
+  max-width: 65ch;
+  margin-inline: auto;
+  font-size: 1.02rem;
+  color: #cfc9be;
+
+  p { margin-block: 0 var(--bs-s3); }
+  h2 { font-size: 1.7rem; margin-block: var(--bs-s5) var(--bs-s2); color: var(--bs-bone); }
+  h3 { font-size: 1.3rem; margin-block: var(--bs-s4) var(--bs-s2); color: var(--bs-bone); }
+  ul, ol { padding-inline-start: 1.3rem; margin-block: 0 var(--bs-s3); }
+  li { margin-block: 0.3rem; }
+  strong { color: var(--bs-bone); font-weight: 400; }
+
+  blockquote {
+    margin: var(--bs-s4) 0;
+    padding-inline-start: var(--bs-s3);
+    border-inline-start: 2px solid var(--bs-brass);
+    font-family: var(--bs-display);
+    font-size: 1.25rem;
+    color: var(--bs-bone);
+  }
+
+  img { border-radius: var(--bs-r-md); margin-block: var(--bs-s4); }
+  a { color: var(--bs-brass-hi); border-block-end: 1px solid var(--bs-line); }
+}

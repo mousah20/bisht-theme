@@ -1,0 +1,29 @@
+<footer class="bs-foot bs-pad" data-testid="store-footer">
+    <div class="bs-foot__grid">
+        <div>
+            <h4>{{ store.name }}</h4>
+            <p>{{ store.description ?: trans('bisht.bespoke') }}</p>
+        </div>
+        <div>
+            <h4>{{ trans('bisht.sections') }}</h4>
+            <ul>
+                <li><a href="{{ url('products') }}">{{ trans('bisht.all_bishts') }}</a></li>
+                <li><a href="{{ url('page', {slug: 'size-guide'}) }}">{{ trans('bisht.size_guide') }}</a></li>
+                <li><a href="{{ url('page', {slug: 'workshop'}) }}">{{ trans('bisht.workshop') }}</a></li>
+                <li><a href="{{ url('blog') }}">{{ trans('bisht.blog') }}</a></li>
+            </ul>
+        </div>
+        <div>
+            <h4>{{ trans('bisht.bespoke') }}</h4>
+            <ul>
+                {% if store.contacts.whatsapp %}<li><a href="https://wa.me/{{ store.contacts.whatsapp }}">{{ trans('bisht.bespoke_cta') }}</a></li>{% endif %}
+                {% if store.contacts.email %}<li><a href="mailto:{{ store.contacts.email }}">{{ store.contacts.email }}</a></li>{% endif %}
+                {% if store.contacts.mobile %}<li><a href="tel:{{ store.contacts.mobile }}" class="bs-num">{{ store.contacts.mobile }}</a></li>{% endif %}
+            </ul>
+        </div>
+    </div>
+    <div class="bs-foot__legal">
+        <span>{{ store.name }}</span>
+        <salla-social-share data-testid="store-social-share"></salla-social-share>
+    </div>
+</footer>

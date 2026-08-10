@@ -1,0 +1,18 @@
+{#
+  تخطيط صفحات الحساب. لا نبني منطق الحساب — مكونات سلة تتولاه.
+  ما نضبطه: عمود قراءة واحد وقائمة جانبية تصير علوية على الجوال.
+#}
+{% extends "layouts.master" %}
+
+{% block content %}
+<section class="bs-article bs-pad" data-testid="store-customer">
+    <header class="bs-article__head">
+        <h1 class="bs-article__title">{{ page.title }}</h1>
+    </header>
+
+    <div style="max-width:78ch;margin-inline:auto;display:grid;gap:2rem">
+        <salla-user-menu data-testid="store-customer-menu"></salla-user-menu>
+        <div>{% block customer_content %}{% endblock %}</div>
+    </div>
+</section>
+{% endblock %}

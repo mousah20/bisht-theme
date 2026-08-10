@@ -1,0 +1,21 @@
+{% extends "layouts.master" %}
+{% block head_scripts %}<script defer src="{{ 'checkout.js'|asset }}"></script>{% endblock %}
+
+{% block content %}
+<section class="bs-article bs-pad" data-testid="store-cart">
+    <header class="bs-article__head">
+        <h1 class="bs-article__title">{{ page.title }}</h1>
+    </header>
+
+    {# تنبيه القياس قبل الدفع لا بعده: البشت يُقاس، والتنبيه هنا يوفر ارجاعا #}
+    <p class="bs-lede" data-fit-reminder hidden
+       style="max-width:65ch;margin-inline:auto;margin-block-end:2rem;font-size:.88rem">
+        {{ theme.settings.get('bs_fit_note', '') }}
+        <a href="{{ url('page', {slug: 'size-guide'}) }}" style="color:var(--bs-brass-hi)">{{ trans('bisht.size_guide') }}</a>
+    </p>
+
+    <div style="max-width:70ch;margin-inline:auto">
+        <salla-cart-summary page="cart" data-testid="store-cart-summary-page"></salla-cart-summary>
+    </div>
+</section>
+{% endblock %}

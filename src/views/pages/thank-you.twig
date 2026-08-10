@@ -1,0 +1,13 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+<section class="bs-article bs-pad" data-testid="store-thank-you">
+    <header class="bs-article__head">
+        <p class="bs-eyebrow">{{ store.name }}</p>
+        <h1 class="bs-article__title">{{ page.title }}</h1>
+    </header>
+    <div style="max-width:70ch;margin-inline:auto">
+        <salla-order-details order-id="{{ order.id }}" data-testid="store-order-details"></salla-order-details>
+    </div>
+</section>
+{% endblock %}

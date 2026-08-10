@@ -1,0 +1,189 @@
+/* ============================================================
+   الجوال — ليست نقاط توقف بل تصميم قائم بذاته.
+   القاعدة: الاساس هنا جوال، وما فوق ٩٠٠ بكسل هو الاستثناء.
+   ============================================================ */
+
+/* ١) الشرفة السفلى: على الجوال لا يوجد hover ولا شريط علوي مريح،
+      فزر الشراء يثبت اسفل الشاشة فوق منطقة الايماءة. */
+.bs-dock {
+  position: fixed;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 70;
+  display: none;
+  align-items: center;
+  gap: var(--bs-s2);
+  padding: var(--bs-s2) var(--bs-s3);
+  padding-block-end: calc(var(--bs-s2) + env(safe-area-inset-bottom));
+  background: rgb(9 10 14 / 92%);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 -1px 0 var(--bs-line);
+
+  &__price {
+    display: grid;
+    line-height: 1.25;
+
+    span { font-family: var(--bs-mono); font-size: 0.55rem; letter-spacing: 0.16em; color: var(--bs-mute); }
+    strong { font-size: 1.05rem; font-weight: 400; font-variant-numeric: tabular-nums; }
+  }
+
+  .bs-btn { flex: 1 1 auto; justify-content: space-between; }
+}
+
+@media (max-width: 899px) {
+  .bs-dock.is-on { display: flex; }
+  /* لا يحجب الفوتر */
+  body.bs-has-dock { padding-block-end: 5.5rem; }
+}
+
+/* ٢) القائمة: الحبة العائمة تحتفظ بالعلامة والسلة، والباقي في درج */
+.bs-burger {
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border: 0;
+  border-radius: 999px;
+  background: rgb(237 231 220 / 8%);
+
+  span {
+    display: block;
+    inline-size: 1.05rem;
+    block-size: 1px;
+    background: var(--bs-bone);
+    transition: transform 0.5s var(--bs-e), opacity 0.35s var(--bs-e);
+  }
+
+  span + span { margin-block-start: 5px; }
+}
+
+@media (min-width: 900px) { .bs-burger { display: none; } }
+
+/* الدرج: يفتح من الجهة الصحيحة في RTL ويغلق بالسحب */
+.bs-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 5rem var(--bs-pad) calc(var(--bs-s5) + env(safe-area-inset-bottom));
+  background: rgb(10 12 16 / 96%);
+  backdrop-filter: blur(24px);
+  transform: translate3d(0, -100%, 0);
+  transition: transform 0.7s var(--bs-e);
+  will-change: transform;
+
+  &.is-open { transform: none; }
+
+  &__links { display: grid; gap: var(--bs-s3); align-content: start; }
+
+  a {
+    font-family: var(--bs-display);
+    font-size: 2rem;
+    padding-block: 0.35rem;
+    opacity: 0;
+    transform: translateY(1.2rem);
+    transition: opacity 0.6s var(--bs-e), transform 0.6s var(--bs-e);
+  }
+
+  &.is-open a { opacity: 1; transform: none; }
+
+  /* تدرج ظهور الروابط */
+  &.is-open a:nth-child(1) { transition-delay: 0.12s; }
+  &.is-open a:nth-child(2) { transition-delay: 0.18s; }
+  &.is-open a:nth-child(3) { transition-delay: 0.24s; }
+  &.is-open a:nth-child(4) { transition-delay: 0.3s; }
+  &.is-open a:nth-child(5) { transition-delay: 0.36s; }
+
+  &__close {
+    position: absolute;
+    inset-block-start: 1.6rem;
+    inset-inline-end: var(--bs-pad);
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    border: 0;
+    border-radius: 999px;
+    background: rgb(237 231 220 / 8%);
+    color: var(--bs-bone);
+    font-size: 1.1rem;
+  }
+}
+
+/* ٣) الغلاف على الجوال: النص لا يزاحم الشخص، فالتعتيم من الاسفل لا الجانب */
+@media (max-width: 899px) {
+  .bs-land__media::after {
+    background:
+      linear-gradient(0deg, rgb(10 12 16 / 96%) 0%, rgb(10 12 16 / 72%) 34%, rgb(10 12 16 / 12%) 68%),
+      linear-gradient(180deg, rgb(10 12 16 / 60%), transparent 22%);
+  }
+
+  .bs-land__body { align-content: end; padding-block-end: 8rem; }
+  .bs-land__h { font-size: clamp(2.6rem, 13vw, 4.2rem); }
+  .bs-land__p { max-width: 30ch; font-size: 0.95rem; }
+  .bs-dots { inset-block-end: 4.4rem; inset-inline-start: var(--bs-pad); inset-inline-end: auto; }
+  .bs-land__foot { font-size: 0.52rem; }
+}
+
+/* ٤) الاقسام: البطاقة المضاعفة تعود بطاقة عادية، والارتفاع يقل */
+@media (max-width: 699px) {
+  .bs-secs { padding-block-start: 7rem; }
+  .bs-card { min-block-size: 200px; }
+  .bs-grid > a:first-child .bs-card { min-block-size: 300px; }
+  .bs-grid > a:first-child .bs-card__t b { font-size: 1.6rem; }
+}
+
+/* ٥) العمود: الصورة اولا ثم النص، وبلا تحويم */
+@media (max-width: 899px) {
+  .bs-row { padding-block: var(--bs-s5); gap: var(--bs-s4); }
+  .bs-row--flip .bs-row__media { order: 0; }
+  .bs-row:hover .bs-row__media img { transform: none; }
+  .bs-card:hover { transform: none; }
+  .bs-card:hover img { transform: none; }
+  .bs-row__media { aspect-ratio: 3 / 4; }
+}
+
+/* ٦) اهداف اللمس: لا شيء اقل من ٤٤ بكسل */
+@media (pointer: coarse) {
+  .bs-btn { padding-block: 0.85rem; }
+  .bs-sizes button, .bs-fit__opts button { min-block-size: 44px; padding-inline: 1.05rem; }
+  .bs-nav__bag, .bs-dots button { min-block-size: 44px; }
+  .bs-dots button { block-size: 44px; background: transparent; position: relative; }
+
+  .bs-dots button::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 50%;
+    block-size: 2px;
+    border-radius: 2px;
+    background: rgb(237 231 220 / 28%);
+  }
+
+  .bs-dots button[aria-pressed='true']::after { background: var(--bs-brass-hi); block-size: 3px; }
+}
+
+/* ٧) المدونة والمقال على الجوال */
+@media (max-width: 819px) {
+  .bs-blog { padding-block-start: 7rem; }
+  .bs-article { padding-block-start: 7rem; }
+  .bs-article__hero { aspect-ratio: 4 / 3; border-radius: var(--bs-r-md); }
+  .bs-prose { font-size: 1rem; }
+}
+
+/* ٨) دليل القياس: حقل الطول رقمي وواسع */
+@media (max-width: 899px) {
+  .bs-fit__in { padding: var(--bs-s4) var(--bs-s3); }
+  .bs-fit__table { font-size: 0.66rem; }
+  .bs-fit__table th, .bs-fit__table td { padding: 0.5rem 0.4rem; }
+}
+
+/* ٩) الستارة على الجوال: ثنيات اقل حتى لا تثقل الاطار */
+@media (max-width: 599px) {
+  .bs-fold:nth-child(n + 6) { display: none; }
+  .bs-fold { background-size: 500% 100%; }
+  .bs-fold:nth-child(1) { background-position: 0% 0; }
+  .bs-fold:nth-child(2) { background-position: 25% 0; }
+  .bs-fold:nth-child(3) { background-position: 50% 0; }
+  .bs-fold:nth-child(4) { background-position: 75% 0; }
+  .bs-fold:nth-child(5) { background-position: 100% 0; }
+}

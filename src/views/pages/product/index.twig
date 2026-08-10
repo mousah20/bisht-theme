@@ -1,0 +1,38 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+<section class="bs-secs bs-pad" data-testid="store-products-index">
+    <div class="bs-secs__head bs-rise">
+        <h1>{{ page.title ?: trans('bisht.all_bishts') }}</h1>
+        <span class="bs-num">{{ products.total ?? '' }}</span>
+    </div>
+
+    <salla-filters data-testid="store-filters"></salla-filters>
+
+    {# عمود لا شبكة: بطاقة واحدة تملأ العين، والمقاسات سطر واحد #}
+    <div class="bs-col">
+        {% for product in products %}
+            <article class="bs-row {{ loop.index is odd ? '' : 'bs-row--flip' }} bs-rise">
+                <a href="{{ product.url }}" class="bs-row__media" data-curtain>
+                    <span class="bs-row__idx">{{ loop.index < 10 ? '0' ~ loop.index : loop.index }}</span>
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}" loading="lazy">
+                </a>
+                <div>
+                    <h2 class="bs-row__name"><a href="{{ product.url }}" data-curtain>{{ product.name }}</a></h2>
+                    {% if product.subtitle %}<p class="bs-row__desc">{{ product.subtitle }}</p>{% endif %}
+                    <p class="bs-eyebrow" data-card-sizes="{{ product.options|map(o => o.name)|join(',') }}"></p>
+                    <div class="bs-price" style="margin-block-start:1.4rem">
+                        <strong>{{ product.price|money }}</strong>
+                        {% if product.has_special_price %}<s>{{ product.regular_price|money }}</s>{% endif %}
+                        {% if product.quantity == 0 %}<em>{{ trans('bisht.sold_out') }}</em>{% endif %}
+                    </div>
+                    <a href="{{ product.url }}" class="bs-btn" data-curtain style="margin-block-start:1.5rem">
+                        {{ trans('bisht.read_more') }}
+                        <i>{% include 'components/icons/door.twig' %}</i>
+                    </a>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

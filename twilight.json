@@ -1,0 +1,408 @@
+{
+    "name": {
+        "ar": "بشت",
+        "en": "Bisht"
+    },
+    "repository": "https://github.com/mousah20/bisht-theme",
+    "author_email": "mousah20@gmail.com",
+    "features": [
+        "mega-menu",
+        "fonts",
+        "color",
+        "breadcrumb",
+        "unite-cards-height",
+        "component-featured-products",
+        "component-fixed-banner",
+        "component-products-slider",
+        "component-photos-slider",
+        "component-square-photos",
+        "component-store-features",
+        "component-testimonials",
+        "menu-images",
+        "filters"
+    ],
+    "settings": [
+        {
+            "id": "bs_landing_enabled",
+            "type": "boolean",
+            "label": {
+                "ar": "صفحة الغلاف قبل المتجر",
+                "en": "Landing page before the store"
+            },
+            "description": {
+                "ar": "تظهر صفحة غلاف كاملة الشاشة قبل الدخول للمتجر. اطفئها لو اردت الدخول المباشر للاقسام.",
+                "en": "A full screen cover page before entering the store. Turn it off to land directly on the sections."
+            },
+            "value": true,
+            "required": false
+        },
+        {
+            "id": "bs_landing_title",
+            "type": "string",
+            "format": "text",
+            "label": {
+                "ar": "عنوان الغلاف — السطر الاول",
+                "en": "Cover headline, first line"
+            },
+            "description": {
+                "ar": "اقصر ما يمكن. سطران مجموعهما دون ست كلمات هو ما يعمل في هذا التخطيط.",
+                "en": "As short as possible. Two lines under six words total is what works in this layout."
+            },
+            "value": "اصالة تلبس",
+            "required": false
+        },
+        {
+            "id": "bs_landing_title_2",
+            "type": "string",
+            "format": "text",
+            "label": {
+                "ar": "عنوان الغلاف — السطر الثاني",
+                "en": "Cover headline, second line"
+            },
+            "description": {
+                "ar": "يظهر بلون النحاس تحت السطر الاول.",
+                "en": "Rendered in the brass accent under the first line."
+            },
+            "value": "وفخامة تورث",
+            "required": false
+        },
+        {
+            "id": "bs_landing_sub",
+            "type": "string",
+            "format": "textarea",
+            "label": {
+                "ar": "سطر الغلاف الوصفي",
+                "en": "Cover supporting line"
+            },
+            "description": {
+                "ar": "جملة واحدة تقول ما يميز خياطتك. صف ما تفعله لا ما تدعيه.",
+                "en": "One sentence on what makes your tailoring different. Describe what you do, not what you claim."
+            },
+            "value": "قصب يطرز باليد على صوف مختار، ويقاس عليك وحدك.",
+            "required": false
+        },
+        {
+            "id": "bs_landing_image_1",
+            "type": "string",
+            "format": "image",
+            "icon": "sicon-image",
+            "label": {
+                "ar": "صورة الغلاف الاولى",
+                "en": "Cover image one"
+            },
+            "description": {
+                "ar": "افقية وواسعة، والشخص في يسار الاطار لان النص يجلس يمينه.",
+                "en": "Wide landscape with the subject on the left, since the copy sits on the right in Arabic."
+            },
+            "value": null,
+            "required": false
+        },
+        {
+            "id": "bs_landing_image_2",
+            "type": "string",
+            "format": "image",
+            "icon": "sicon-image",
+            "label": {
+                "ar": "صورة الغلاف الثانية",
+                "en": "Cover image two"
+            },
+            "description": {
+                "ar": "اختيارية. لو وضعتها تبادلت الصورتان كل ثماني ثوان — والفكرة ان تريه نفس البشت في مقامين.",
+                "en": "Optional. If set, the two images alternate every eight seconds, showing the same bisht in two settings."
+            },
+            "value": null,
+            "required": false
+        },
+        {
+            "id": "bs_cloth_image",
+            "type": "string",
+            "format": "image",
+            "icon": "sicon-image",
+            "label": {
+                "ar": "قماش الستارة",
+                "en": "Curtain cloth"
+            },
+            "description": {
+                "ar": "صورة قماش بشت بحاشية قصب في اسفلها. تُقطع على سبع ثنيات فتنزل كثوب واحد بين الصفحات.",
+                "en": "A photo of bisht cloth with the qasab hem near the bottom. It is sliced across seven folds and falls as one garment between pages."
+            },
+            "value": null,
+            "required": false
+        },
+        {
+            "id": "bs_curtain_enabled",
+            "type": "boolean",
+            "label": {
+                "ar": "ستارة الانتقال",
+                "en": "Curtain transition"
+            },
+            "description": {
+                "ar": "تُسدل اثناء تحميل الصفحة فتغطي زمنه. تُعطل تلقائيا لمن يطلب تقليل الحركة من نظامه.",
+                "en": "Falls during the actual page load so it covers the wait. Automatically disabled for visitors who ask for reduced motion."
+            },
+            "value": true,
+            "required": false
+        },
+        {
+            "id": "bs_size_guide_enabled",
+            "type": "boolean",
+            "label": {
+                "ar": "حاسبة القياس في صفحة المنتج",
+                "en": "Size calculator on the product page"
+            },
+            "description": {
+                "ar": "ثلاث خطوات تحول القامة والبنية والاستعمال الى مقاس واحد بالطول والكتف.",
+                "en": "Three steps that turn height, build and use into one length and shoulder size."
+            },
+            "value": true,
+            "required": false
+        },
+        {
+            "id": "bs_fit_note",
+            "type": "string",
+            "format": "textarea",
+            "label": {
+                "ar": "ملاحظة القياس",
+                "en": "Fit note"
+            },
+            "description": {
+                "ar": "تظهر تحت نتيجة الحاسبة. اكتب قاعدتك انت ان كانت تختلف — الافتراضي ان البشت يقف عن الكعب.",
+                "en": "Shown under the calculator result. Write your own rule if it differs. The default is that the bisht stops at the heel."
+            },
+            "value": "المقاس يقف عن الكعب ولا يمس الارض. التعديل مجاني مرة واحدة.",
+            "required": false
+        },
+        {
+            "id": "bs_mobile_dock",
+            "type": "boolean",
+            "label": {
+                "ar": "شرفة الشراء على الجوال",
+                "en": "Mobile buy dock"
+            },
+            "description": {
+                "ar": "شريط سفلي ثابت بالسعر وزر الاضافة، يظهر بعد ان يمرر الزائر عن الزر الاصلي.",
+                "en": "A fixed bottom bar with the price and add button, shown after the visitor scrolls past the original button."
+            },
+            "value": true,
+            "required": false
+        },
+        {
+            "id": "bs_occasions_enabled",
+            "type": "boolean",
+            "label": {
+                "ar": "التصفح بالمناسبة",
+                "en": "Browse by occasion"
+            },
+            "description": {
+                "ar": "شريط مناسبات في الرئيسية: عيد ورسمي ويومي. اربط كل مناسبة بتصنيف من قائمة متجرك.",
+                "en": "An occasions strip on the home page. Link each occasion to a category from your store menu."
+            },
+            "value": true,
+            "required": false
+        },
+        {
+            "id": "bs_gift_enabled",
+            "type": "boolean",
+            "label": {
+                "ar": "خيار الاهداء",
+                "en": "Gift option"
+            },
+            "description": {
+                "ar": "يظهر تنبيه التغليف والبطاقة في صفحة المنتج والسلة. نصف بشوت العيد هدايا.",
+                "en": "Shows the wrapping and card note on the product page and cart. Half of holiday bishts are gifts."
+            },
+            "value": true,
+            "required": false
+        }
+    ],
+    "components": [
+        {
+            "key": "7b1c4e2a-9d34-4f18-8a6b-3c5e7f9a1d20",
+            "title": {
+                "ar": "التصفح بالمناسبة",
+                "en": "Browse by occasion"
+            },
+            "icon": "sicon-category",
+            "path": "home.occasions",
+            "is_default": true,
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "format": "text",
+                    "label": {
+                        "ar": "عنوان القسم",
+                        "en": "Section title"
+                    },
+                    "value": "المناسبات",
+                    "required": false
+                },
+                {
+                    "id": "description",
+                    "type": "string",
+                    "format": "text",
+                    "label": {
+                        "ar": "سطر جانبي",
+                        "en": "Side note"
+                    },
+                    "value": "",
+                    "required": false
+                },
+                {
+                    "id": "items",
+                    "type": "collection",
+                    "format": "collection",
+                    "item_label": "مناسبة",
+                    "minLength": 2,
+                    "maxLength": 6,
+                    "required": true,
+                    "label": {
+                        "ar": "المناسبات",
+                        "en": "Occasions"
+                    },
+                    "fields": [
+                        {
+                            "id": "title",
+                            "type": "string",
+                            "format": "text",
+                            "label": {
+                                "ar": "اسم المناسبة",
+                                "en": "Occasion name"
+                            },
+                            "value": "",
+                            "required": true
+                        },
+                        {
+                            "id": "note",
+                            "type": "string",
+                            "format": "text",
+                            "label": {
+                                "ar": "سطر صغير",
+                                "en": "Small note"
+                            },
+                            "value": "",
+                            "required": false
+                        },
+                        {
+                            "id": "image",
+                            "type": "string",
+                            "format": "image",
+                            "icon": "sicon-image",
+                            "label": {
+                                "ar": "الصورة",
+                                "en": "Image"
+                            },
+                            "value": null,
+                            "required": false
+                        },
+                        {
+                            "id": "url",
+                            "type": "string",
+                            "format": "text",
+                            "label": {
+                                "ar": "رابط التصنيف",
+                                "en": "Category link"
+                            },
+                            "value": "",
+                            "required": true
+                        }
+                    ],
+                    "value": []
+                }
+            ]
+        },
+        {
+            "key": "2f8a6d13-5e47-4b92-9c81-6d3f2a7b4e15",
+            "title": {
+                "ar": "حكاية الورشة",
+                "en": "The workshop story"
+            },
+            "icon": "sicon-image",
+            "path": "home.workshop",
+            "is_default": true,
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "format": "text",
+                    "label": {
+                        "ar": "العنوان",
+                        "en": "Title"
+                    },
+                    "value": "الحاشية وحدها تلمع",
+                    "required": false
+                },
+                {
+                    "id": "text",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": {
+                        "ar": "النص",
+                        "en": "Text"
+                    },
+                    "description": {
+                        "ar": "جملتان عن الصناعة لا عن السعر.",
+                        "en": "Two sentences about the craft, not the price."
+                    },
+                    "value": "اربع وعشرون ساعة عمل على حد واحد. كل خيط يدخل باليد ولا يوصل.",
+                    "required": false
+                },
+                {
+                    "id": "image",
+                    "type": "string",
+                    "format": "image",
+                    "icon": "sicon-image",
+                    "label": {
+                        "ar": "صورة كاملة النزف",
+                        "en": "Full bleed image"
+                    },
+                    "description": {
+                        "ar": "افقية. القصب او يد الحرفي.",
+                        "en": "Landscape. The qasab or the craftsman hand."
+                    },
+                    "value": null,
+                    "required": false
+                }
+            ]
+        },
+        {
+            "key": "9c3e5b74-1a68-4d25-b7f9-4e8a2c6d3b91",
+            "title": {
+                "ar": "القياس اولا",
+                "en": "Fit first"
+            },
+            "icon": "sicon-ruler",
+            "path": "home.fit-first",
+            "is_default": false,
+            "fields": [
+                {
+                    "id": "title",
+                    "type": "string",
+                    "format": "text",
+                    "label": {
+                        "ar": "العنوان",
+                        "en": "Title"
+                    },
+                    "value": "دليل القياس",
+                    "required": false
+                },
+                {
+                    "id": "text",
+                    "type": "string",
+                    "format": "textarea",
+                    "label": {
+                        "ar": "النص",
+                        "en": "Text"
+                    },
+                    "value": "ثلاث خطوات تعطيك مقاسك بالطول والكتف قبل ان تختار.",
+                    "required": false
+                }
+            ]
+        }
+    ],
+    "support_url": "https://mousah20.github.io/salla-themes-support/bisht.html",
+    "description": {
+        "ar": "متجر بشوت يقيس قبل ان يعرض. غلاف كامل الشاشة يدخل منه الزائر بستارة قماش، وعمود منتجات بطول الشاشة بدل شبكة بطاقات، وحاسبة قياس بالطول والكتف تحول القامة والبنية والاستعمال الى مقاس واحد — لان اكبر سبب ارجاع في البشوت هو المقاس. مدونة وحكاية ورشة وتصفح بالمناسبة، وطبقة جوال مصممة لا مضغوطة.",
+        "en": "A bisht store that measures before it displays. A full screen cover the visitor enters through a cloth curtain, a full height product column instead of a card grid, and a fit calculator that turns height, build and use into one length and shoulder size, because the biggest cause of returns in this category is the size. Journal, workshop story, browse by occasion, and a mobile layer that is designed rather than squeezed."
+    }
+}

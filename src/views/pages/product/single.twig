@@ -1,0 +1,95 @@
+{% extends "layouts.master" %}
+
+{% block head_scripts %}
+    <script defer src="{{ 'product.js'|asset }}"></script>
+    <script defer src="{{ 'size-guide.js'|asset }}"></script>
+{% endblock %}
+
+{% block content %}
+<article class="bs-col bs-pad" data-testid="store-product-single">
+    <salla-breadcrumb data-testid="store-breadcrumb"></salla-breadcrumb>
+
+    <div class="bs-row" style="border-block-start:0">
+        <div class="bs-row__media">
+            <salla-slider type="thumbs" id="bs-gallery" data-testid="store-product-gallery">
+                {% for image in product.images %}
+                    <div class="swiper-slide">
+                        <img src="{{ image.url }}" alt="{{ image.alt ?: product.name }}"
+                             loading="{{ loop.first ? 'eager' : 'lazy' }}">
+                    </div>
+                {% endfor %}
+            </salla-slider>
+        </div>
+
+        <div>
+            <h1 class="bs-row__name">{{ product.name }}</h1>
+
+            {% if product.description %}
+                <div class="bs-row__desc">{{ product.description|striptags|slice(0, 220) }}</div>
+            {% endif %}
+
+            {# المواصفات: خطوط منقطة لا صناديق #}
+            <div class="bs-spec">
+                {% if product.brand.name %}<div><span>{{ trans('bisht.fabric') }}</span><b>{{ product.brand.name }}</b></div>{% endif %}
+                {% if product.weight %}<div><span>{{ trans('bisht.weight') }}</span><b>{{ product.weight }}</b></div>{% endif %}
+                {% if product.sku %}<div><span>SKU</span><b>{{ product.sku }}</b></div>{% endif %}
+            </div>
+
+            {# الخيارات والسعر من سلة: لا نبني منطق التسعير ولا المخزون #}
+            <div style="margin-block-start:1.9rem">
+                <salla-product-options product-id="{{ product.id }}" data-testid="store-product-options"></salla-product-options>
+            </div>
+
+            <div class="bs-price" style="margin-block-start:1.6rem">
+                <strong>{{ product.price|money }}</strong>
+                {% if product.has_special_price %}<s>{{ product.regular_price|money }}</s>{% endif %}
+                {% if product.quantity == 0 %}<em>{{ trans('bisht.sold_out') }}</em>{% endif %}
+            </div>
+
+            <hr class="bs-rule">
+
+            <div data-dock-anchor>
+                <salla-add-product-button product-id="{{ product.id }}"
+                                          product-status="{{ product.status }}"
+                                          product-type="{{ product.type }}"
+                                          data-testid="store-add-to-cart">
+                    {{ trans('bisht.add_to_cart') }}
+                </salla-add-product-button>
+            </div>
+
+            {% if theme.settings.get('bs_gift_enabled', true) %}
+                <p class="bs-lede" style="margin-block-start:1.1rem;font-size:.85rem">{{ trans('bisht.gift_note') }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    {# حاسبة القياس: تحت المنتج لا في نافذة، لان القياس جزء من القرار لا ملحق به #}
+    {% if theme.settings.get('bs_size_guide_enabled', true) %}
+        <section style="margin-block-start:4rem" class="bs-rise">
+            <div class="bs-col__head" style="margin-block-end:1.6rem">
+                <h2>{{ trans('bisht.size_guide') }}</h2>
+                <span>{{ trans('bisht.length') }} · {{ trans('bisht.shoulder') }}</span>
+            </div>
+            {% include 'components/size-guide.twig' %}
+        </section>
+    {% endif %}
+
+    <salla-comments data-testid="store-product-comments" product-id="{{ product.id }}"></salla-comments>
+</article>
+
+{# الشرفة السفلى: على الجوال زر الشراء لا يُبحث عنه #}
+{% if theme.settings.get('bs_mobile_dock', true) %}
+<div class="bs-dock" data-dock>
+    <div class="bs-dock__price">
+        <span>{{ product.name|slice(0, 22) }}</span>
+        <strong>{{ product.price|money }}</strong>
+    </div>
+    <salla-add-product-button class="bs-btn" product-id="{{ product.id }}"
+                              product-status="{{ product.status }}"
+                              product-type="{{ product.type }}"
+                              data-testid="store-dock-add">
+        {{ trans('bisht.add_to_cart') }}
+    </salla-add-product-button>
+</div>
+{% endif %}
+{% endblock %}

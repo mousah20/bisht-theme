@@ -1,0 +1,31 @@
+{# الرأس: حبة عائمة لا شريط ملتصق. على الجوال تبقى العلامة والسلة وزر الدرج فقط. #}
+<nav class="bs-nav" data-testid="store-header">
+    <div class="bs-nav__in">
+        <a href="{{ store.url }}" class="bs-nav__mark">{{ store.name }}</a>
+
+        <a href="{{ store.url }}#bs-sections" data-curtain>{{ trans('bisht.sections') }}</a>
+        <a href="{{ url('products') }}" data-curtain>{{ trans('bisht.all_bishts') }}</a>
+        <a href="{{ url('page', {slug: 'size-guide'}) }}" data-curtain>{{ trans('bisht.size_guide') }}</a>
+        <a href="{{ url('blog') }}" data-curtain>{{ trans('bisht.blog') }}</a>
+
+        <button class="bs-burger" data-drawer-open aria-expanded="false"
+                aria-label="{{ trans('bisht.menu') }}"><span></span><span></span></button>
+
+        <a href="{{ url('cart') }}" class="bs-nav__bag" aria-label="{{ trans('bisht.add_to_cart') }}">
+            <salla-cart-summary data-testid="store-cart-summary"></salla-cart-summary>
+        </a>
+    </div>
+</nav>
+
+{# الدرج: روابط بحجم يُلمس، تظهر بتدرج، وتُغلق بالمفتاح #}
+<div class="bs-drawer" data-drawer aria-hidden="true">
+    <button class="bs-drawer__close" data-drawer-close aria-label="{{ trans('bisht.close') }}">&#215;</button>
+    <div class="bs-drawer__links">
+        <a href="{{ store.url }}">{{ trans('bisht.cover') }}</a>
+        <a href="{{ url('products') }}">{{ trans('bisht.all_bishts') }}</a>
+        <a href="{{ url('page', {slug: 'size-guide'}) }}">{{ trans('bisht.size_guide') }}</a>
+        <a href="{{ url('page', {slug: 'workshop'}) }}">{{ trans('bisht.workshop') }}</a>
+        <a href="{{ url('blog') }}">{{ trans('bisht.blog') }}</a>
+    </div>
+    <salla-user-menu data-testid="store-user-menu"></salla-user-menu>
+</div>

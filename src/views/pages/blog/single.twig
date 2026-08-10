@@ -1,0 +1,28 @@
+{% extends "layouts.master" %}
+
+{% block head_scripts %}<script defer src="{{ 'blog.js'|asset }}"></script>{% endblock %}
+
+{% block content %}
+{# شريط تقدم القراءة: الشيء الوحيد الذي يتحرك اثناء القراءة #}
+<div style="position:fixed;inset-block-start:0;inset-inline:0;z-index:80;height:2px;
+            background:var(--bs-brass);transform-origin:right center;transform:scaleX(0)"
+     data-read-progress aria-hidden="true"></div>
+
+<article class="bs-article bs-pad" data-article data-testid="store-blog-single">
+    <header class="bs-article__head">
+        <p class="bs-eyebrow bs-num">{{ article.date }}</p>
+        <h1 class="bs-article__title">{{ article.title }}</h1>
+        {% if article.author %}<p class="bs-lede" style="margin-inline:auto">{{ article.author.name }}</p>{% endif %}
+    </header>
+
+    {% if article.image %}
+        <div class="bs-article__hero"><img src="{{ article.image }}" alt="{{ article.title }}"></div>
+    {% endif %}
+
+    <div class="bs-prose">{{ article.content|raw }}</div>
+
+    <div style="max-width:65ch;margin-inline:auto;margin-block-start:3rem">
+        <salla-social-share data-testid="store-blog-share"></salla-social-share>
+    </div>
+</article>
+{% endblock %}

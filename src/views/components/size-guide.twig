@@ -1,0 +1,64 @@
+{#
+  حاسبة القياس — العمود الوظيفي للثيم.
+  ثلاث خطوات تنتهي برقم واحد، والجدول الكامل يبقى تحتها لمن يريد الارقام.
+  الجدول لا يُخفى بل يُبرز صفه المطابق، لان اخفاء المعلومة يخلق شكا.
+#}
+<div class="bs-fit" data-size-guide>
+    <div class="bs-fit__in">
+        <div class="bs-fit__steps">
+            <div class="bs-fit__step">
+                <label for="bs-h">{{ trans('bisht.fit_step_height') }}</label>
+                <input id="bs-h" type="number" inputmode="numeric" min="140" max="215" step="1"
+                       placeholder="175" data-fit-height>
+            </div>
+
+            <div class="bs-fit__step">
+                <label>{{ trans('bisht.fit_step_build') }}</label>
+                <div class="bs-fit__opts" data-fit-group="build">
+                    <button type="button" data-value="slim" aria-pressed="false">{{ trans('bisht.build_slim') }}</button>
+                    <button type="button" data-value="normal" aria-pressed="true">{{ trans('bisht.build_normal') }}</button>
+                    <button type="button" data-value="wide" aria-pressed="false">{{ trans('bisht.build_wide') }}</button>
+                    <button type="button" data-value="xwide" aria-pressed="false">{{ trans('bisht.build_xwide') }}</button>
+                </div>
+            </div>
+
+            <div class="bs-fit__step">
+                <label>{{ trans('bisht.fit_step_use') }}</label>
+                <div class="bs-fit__opts" data-fit-group="use">
+                    <button type="button" data-value="formal" aria-pressed="false">{{ trans('bisht.use_formal') }}</button>
+                    <button type="button" data-value="daily" aria-pressed="true">{{ trans('bisht.use_daily') }}</button>
+                    <button type="button" data-value="work" aria-pressed="false">{{ trans('bisht.use_work') }}</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="bs-fit__out" data-fit-out hidden>
+            <span>{{ trans('bisht.your_size') }}</span>
+            <strong data-fit-label></strong>
+            <em data-fit-note></em>
+        </div>
+
+        <table class="bs-fit__table" data-fit-table>
+            <caption class="bs-eyebrow" style="text-align:start;padding-block-end:.6rem">{{ trans('bisht.size_table') }}</caption>
+            <thead>
+                <tr>
+                    <th>{{ trans('bisht.body_height') }}</th>
+                    <th>{{ trans('bisht.bisht_length') }}</th>
+                    <th>{{ trans('bisht.shoulder_width') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr data-row="150"><td>148 — 157</td><td>138</td><td>48</td></tr>
+                <tr data-row="160"><td>158 — 165</td><td>146</td><td>50</td></tr>
+                <tr data-row="170"><td>166 — 173</td><td>154</td><td>52</td></tr>
+                <tr data-row="180"><td>174 — 181</td><td>162</td><td>54</td></tr>
+                <tr data-row="190"><td>182 — 189</td><td>170</td><td>56</td></tr>
+                <tr data-row="200"><td>190 — 205</td><td>178</td><td>58</td></tr>
+            </tbody>
+        </table>
+
+        <p class="bs-lede" style="margin-block-start:1.1rem;font-size:.85rem">
+            {{ theme.settings.get('bs_fit_note', 'المقاس يقف عن الكعب ولا يمس الارض.') }}
+        </p>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+{% extends "layouts.master" %}
+
+{% block content %}
+<section class="bs-secs bs-pad" data-testid="store-brands">
+    <div class="bs-secs__head bs-rise">
+        <h1>{{ page.title }}</h1>
+    </div>
+    <div class="bs-grid">
+        {% for brand in brands %}
+            <a href="{{ brand.url }}" class="bs-rise" data-curtain>
+                <div class="bs-card">
+                    {% if brand.logo %}<img src="{{ brand.logo }}" alt="{{ brand.name }}" loading="lazy">{% endif %}
+                    <div class="bs-card__t"><b>{{ brand.name }}</b></div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

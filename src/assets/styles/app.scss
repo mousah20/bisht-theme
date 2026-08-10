@@ -1,0 +1,230 @@
+/* ============================================================
+   بشت — نظام تصميم مكتوب من الصفر، بلا وراثة من ثيم رائد.
+   الطبقات:
+     ٠ رموز التصميم      tokens
+     ١ اساس المستند       base
+     ٢ تخطيط              layout
+     ٣ عناصر مشتركة       elements
+     ٤ اقسام الصفحات      blocks
+     ٥ مكونات سلة         salla overrides
+   القاعدة الحاكمة: لا يلمع في الصفحة الا شيء واحد — النحاس.
+   ============================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- ٠ رموز التصميم ---------- */
+:root {
+  /* الالوان: ارضية حبر، سطوح عاج، ومعدن مكتوم محصور */
+  --bs-ink: #0f1116;
+  --bs-ink-2: #0a0c10;
+  --bs-ink-3: #171b23;
+  --bs-bone: #ede7dc;
+  --bs-bone-dim: #a9a398;
+  --bs-mute: #6e6a61;
+  --bs-brass: #8a7a55;
+  --bs-brass-hi: #c4ae7c;
+  --bs-oxblood: #5b1f26;
+  --bs-line: rgba(138, 122, 85, 0.22);
+
+  /* الخطوط: العربية لغة العرض واللاتينية لغة الحاشية */
+  --bs-display: 'Bisht Display', 'Noto Naskh Arabic', 'Traditional Arabic', serif;
+  --bs-ui: 'Bisht UI', 'Noto Kufi Arabic', system-ui, sans-serif;
+  --bs-mono: ui-monospace, 'Cascadia Mono', 'Consolas', monospace;
+
+  /* الايقاع: سلم مساحات واحد يُستعمل في كل مكان */
+  --bs-s1: 0.35rem;
+  --bs-s2: 0.7rem;
+  --bs-s3: 1.1rem;
+  --bs-s4: 1.7rem;
+  --bs-s5: 2.6rem;
+  --bs-s6: 4rem;
+  --bs-s7: 6.5rem;
+
+  --bs-r-sm: 0.8rem;
+  --bs-r-md: 1.6rem;
+  --bs-r-lg: 2rem;
+
+  /* الحركة: منحنى واحد للسكون ومنحنى للسقوط */
+  --bs-e: cubic-bezier(0.32, 0.72, 0, 1);
+  --bs-fall: cubic-bezier(0.55, 0.06, 0.68, 0.19);
+
+  --bs-pad: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  :root { --bs-pad: 3.5rem; }
+}
+
+/* ---------- ١ اساس المستند ---------- */
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bs-ink);
+  color: var(--bs-bone);
+  font-family: var(--bs-ui);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, svg, video { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; }
+
+h1, h2, h3, h4 {
+  font-family: var(--bs-display);
+  font-weight: 400;
+  margin: 0;
+  text-wrap: balance;
+  line-height: 1.1;
+}
+
+::selection { background: var(--bs-brass-hi); color: var(--bs-ink); }
+
+:focus-visible { outline: 2px solid var(--bs-brass-hi); outline-offset: 3px; }
+
+/* الارقام في الجداول والاسعار تُصطف */
+.bs-num, .bs-spec b, .bs-price strong { font-variant-numeric: tabular-nums; }
+
+/* ---------- ٢ تخطيط ---------- */
+.bs-pad {
+  max-width: 1340px;
+  margin-inline: auto;
+  padding-inline: var(--bs-pad);
+}
+
+.bs-section { padding-block: var(--bs-s7); }
+
+/* الخط النحاسي: العنصر الوحيد الذي يلمع */
+.bs-rule {
+  height: 1px;
+  border: 0;
+  background: linear-gradient(270deg, var(--bs-brass), transparent);
+  margin-block: var(--bs-s4);
+}
+
+/* ---------- ٣ عناصر مشتركة ---------- */
+.bs-eyebrow {
+  font-family: var(--bs-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--bs-brass);
+}
+
+.bs-lede {
+  color: var(--bs-bone-dim);
+  max-width: 42ch;
+  font-size: 0.98rem;
+}
+
+/* الزر: حبة مع دائرة ايقونة مدمجة بحافتها */
+.bs-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--bs-s2);
+  padding-block: 0.72rem;
+  padding-inline: 1.5rem 0.45rem;
+  border: 0;
+  border-radius: 999px;
+  background: var(--bs-bone);
+  color: var(--bs-ink);
+  font-size: 0.9rem;
+  transition: transform 0.55s var(--bs-e);
+
+  i {
+    display: grid;
+    place-items: center;
+    inline-size: 2.1rem;
+    block-size: 2.1rem;
+    border-radius: 999px;
+    background: rgb(15 17 22 / 10%);
+    font-style: normal;
+    transition: transform 0.55s var(--bs-e);
+  }
+
+  &:hover { transform: translateY(-3px); }
+  &:hover i { transform: translate(-4px, -1px) scale(1.06); }
+  &:active { transform: scale(0.98); }
+}
+
+.bs-btn--ghost {
+  background: transparent;
+  color: var(--bs-bone);
+  box-shadow: inset 0 0 0 1px var(--bs-line);
+
+  i { background: rgb(237 231 220 / 8%); }
+}
+
+/* جدول المواصفات: خطوط منقطة لا صناديق */
+.bs-spec {
+  display: grid;
+  gap: var(--bs-s1);
+  max-width: 25rem;
+  font-family: var(--bs-mono);
+  font-size: 0.7rem;
+  color: var(--bs-mute);
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--bs-s3);
+    padding-block-end: var(--bs-s1);
+    border-block-end: 1px dashed var(--bs-line);
+  }
+
+  b { color: var(--bs-bone); font-weight: 400; }
+}
+
+/* السعر */
+.bs-price {
+  display: flex;
+  align-items: baseline;
+  gap: var(--bs-s2);
+  flex-wrap: wrap;
+
+  strong { font-size: 1.6rem; font-weight: 400; }
+  s { color: var(--bs-mute); font-size: 0.9rem; }
+
+  em {
+    font-style: normal;
+    font-family: var(--bs-mono);
+    font-size: 0.57rem;
+    letter-spacing: 0.14em;
+    color: #d6a0a0;
+    background: rgb(91 31 38 / 55%);
+    padding: 0.28rem 0.65rem;
+    border-radius: 999px;
+  }
+}
+
+/* الكشف عند الدخول */
+.bs-rise {
+  opacity: 0;
+  transform: translateY(2rem);
+  filter: blur(5px);
+  transition: opacity 1s var(--bs-e), transform 1s var(--bs-e), filter 1s var(--bs-e);
+
+  &.is-in { opacity: 1; transform: none; filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .bs-rise { opacity: 1; transform: none; filter: none; transition: none; }
+}
+
+@import './blocks/header';
+@import './blocks/hero';
+@import './blocks/sections';
+@import './blocks/product';
+@import './blocks/size-guide';
+@import './blocks/blog';
+@import './blocks/footer';
+@import './blocks/curtain';
+@import './blocks/mobile';
+@import './salla';

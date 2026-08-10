@@ -1,0 +1,55 @@
+/* الرأس: حبة عائمة منفصلة عن حد الصفحة، لا شريط ملتصق */
+.bs-nav {
+  position: fixed;
+  inset-block-start: 1.5rem;
+  inset-inline: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.bs-nav__in {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--bs-s4);
+  padding-block: 0.5rem;
+  padding-inline: 1.5rem 0.45rem;
+  border-radius: 999px;
+  background: rgb(9 10 14 / 68%);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 0 0 1px var(--bs-line), 0 22px 48px -28px rgb(0 0 0 / 95%);
+}
+
+.bs-nav__mark {
+  font-family: var(--bs-display);
+  font-size: 1.35rem;
+  line-height: 1;
+  padding-inline-end: 0.5rem;
+}
+
+.bs-nav a {
+  font-size: 0.79rem;
+  color: var(--bs-bone-dim);
+  white-space: nowrap;
+  transition: color 0.5s var(--bs-e);
+
+  &:hover, &.is-sel { color: var(--bs-brass-hi); }
+}
+
+.bs-nav__bag {
+  display: grid;
+  place-items: center;
+  inline-size: 2.15rem;
+  block-size: 2.15rem;
+  border-radius: 999px;
+  background: rgb(237 231 220 / 9%);
+  font-family: var(--bs-mono);
+  font-size: 0.7rem;
+  color: var(--bs-brass-hi);
+}
+
+@media (max-width: 840px) {
+  .bs-nav a:not(.is-sel):not(.bs-nav__back) { display: none; }
+}

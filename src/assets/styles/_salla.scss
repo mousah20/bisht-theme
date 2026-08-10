@@ -1,0 +1,51 @@
+/* ============================================================
+   مكونات سلة: لا نبنيها بل نلبسها لوحة بشت.
+   لا نغير سلوكها ولا بنيتها — لون وحد وحيز فقط.
+   ============================================================ */
+salla-product-card, salla-products-list, salla-cart-summary, salla-add-product-button,
+salla-quantity-input, salla-button, salla-modal, salla-login-modal, salla-search,
+salla-product-options, salla-product-availability, salla-price-range, salla-count-down,
+salla-user-menu, salla-menu, salla-slider, salla-social-share, salla-comments,
+salla-loyalty, salla-wishlist, salla-filters, salla-breadcrumb, salla-rating-stars {
+  --salla-color-primary: var(--bs-brass);
+  --salla-color-primary-dark: var(--bs-brass-hi);
+  --salla-color-text: var(--bs-bone);
+  --salla-color-text-light: var(--bs-bone-dim);
+  --salla-color-background: var(--bs-ink);
+  --salla-color-border: var(--bs-line);
+  --salla-radius: var(--bs-r-sm);
+  font-family: var(--bs-ui);
+  color: var(--bs-bone);
+}
+
+/* الازرار الاساسية في مكونات سلة تتبع حبة بشت */
+salla-button::part(button), .s-button-primary {
+  border-radius: 999px !important;
+  background: var(--bs-bone) !important;
+  color: var(--bs-ink) !important;
+  font-family: var(--bs-ui) !important;
+}
+
+/* البطاقات: نلغي الظل الافتراضي ونضع حدا نحاسيا رقيقا */
+.s-product-card-entry {
+  background: var(--bs-ink-3) !important;
+  border-radius: var(--bs-r-md) !important;
+  box-shadow: inset 0 0 0 1px var(--bs-line) !important;
+}
+
+.s-product-card-content-title a { color: var(--bs-bone) !important; font-family: var(--bs-display) !important; }
+.s-product-card-price { color: var(--bs-bone) !important; }
+.s-product-card-sale-price { color: var(--bs-brass-hi) !important; }
+
+/* المدخلات */
+input, select, textarea {
+  background: rgb(237 231 220 / 5%);
+  color: var(--bs-bone);
+  border: 0;
+  box-shadow: inset 0 0 0 1px var(--bs-line);
+  border-radius: var(--bs-r-sm);
+  padding: 0.7rem 0.9rem;
+  font-family: var(--bs-ui);
+
+  &::placeholder { color: var(--bs-mute); }
+}
