@@ -1,0 +1,34 @@
+{#
+  شبكة الاقسام — مكوّن لا حلقة على قائمة.
+
+  ‼ الدرس: سلة لا تمرّر القوائم ولا التصنيفات الى Twig في الصفحة الرئيسية،
+    و‎store.settings.menus‎ يخرج فارغا بلا اي خطأ. البيانات تُغذّى لكل مكوّن
+    بحسب مساره، ومسار ‎home.main-links‎ يستلم ‎component.categories‎ جاهزة.
+
+  التصميم: اول بطاقة مضاعفة العرض والارتفاع لتكسر رتابة الشبكة، والرقم
+  التسلسلي يفيد هنا لان الاقسام مرتبة بترتيب التاجر لا عشوائية.
+#}
+<section class="bs-secs bs-pad" id="bs-sections" data-testid="store-sections">
+    {% if component.title %}
+        <div class="bs-secs__head bs-rise">
+            <h2>{{ component.title }}</h2>
+            <span>{{ store.name }}</span>
+        </div>
+    {% endif %}
+
+    <div class="bs-grid">
+        {% for cat in component.categories %}
+            <a href="{{ cat.url }}" data-curtain class="bs-rise" data-testid="store-section-{{ loop.index }}">
+                <div class="bs-card">
+                    {% if cat.image %}
+                        <img src="{{ cat.image }}" alt="{{ cat.name }}" loading="lazy">
+                    {% endif %}
+                    <div class="bs-card__t">
+                        <span>{{ '%02d'|format(loop.index) }}</span>
+                        <b>{{ cat.name }}</b>
+                    </div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</section>

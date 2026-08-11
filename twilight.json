@@ -262,6 +262,33 @@
     ],
     "components": [
         {
+            "key": "7c1f4a2e-8d3b-46f9-a05e-7213cbd94f60",
+            "title": {
+                "ar": "شبكة الاقسام",
+                "en": "Sections grid"
+            },
+            "icon": "sicon-layout-grid-rearrange",
+            "path": "home.main-links",
+            "is_default": true,
+            "fields": [
+                {
+                    "type": "string",
+                    "id": "title",
+                    "label": {
+                        "ar": "العنوان",
+                        "en": "Title"
+                    },
+                    "value": {
+                        "ar": "الاقسام",
+                        "en": "Sections"
+                    },
+                    "required": false,
+                    "maxLength": 40,
+                    "minLength": 0
+                }
+            ]
+        },
+        {
             "key": "7b1c4e2a-9d34-4f18-8a6b-3c5e7f9a1d20",
             "title": {
                 "ar": "التصفح بالمناسبة",

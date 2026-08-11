@@ -59,41 +59,11 @@
 </section>
 {% endif %}
 
-{# ══════════ الاقسام ══════════ #}
-<section class="bs-secs bs-pad" id="bs-sections" data-testid="store-sections">
-    <div class="bs-secs__head bs-rise">
-        <h1>{{ trans('bisht.sections') }}</h1>
-        <span>{{ store.name }}</span>
-    </div>
-
-    {#
-      ‼ لا نعتمد مفتاح main_menu وحده: متاجر سلة تسمي قوائمها بمعرفات مختلفة،
-      فلو غاب المفتاح خرجت الشبكة فارغة بلا خطأ. نجمع اول قائمة فيها عناصر.
-    #}
-    {% set menus = store.settings.menus ?? {} %}
-    {% set nav = menus.main_menu.items ?? [] %}
-    {% if nav is empty %}
-        {% for m in menus %}
-            {% if nav is empty and m.items is defined and m.items|length %}{% set nav = m.items %}{% endif %}
-        {% endfor %}
-    {% endif %}
-
-    <div class="bs-grid">
-        {% for item in nav %}
-            {% if item.resource_type == 'category' or item.type == 'category' %}
-                <a href="{{ item.url }}" data-curtain class="bs-rise">
-                    <div class="bs-card">
-                        {% if item.image %}<img src="{{ item.image }}" alt="{{ item.title }}" loading="lazy">{% endif %}
-                        <div class="bs-card__t">
-                            <span>{{ loop.index }}</span>
-                            <b>{{ item.title }}</b>
-                        </div>
-                    </div>
-                </a>
-            {% endif %}
-        {% endfor %}
-    </div>
-</section>
+{#
+  الاقسام صارت مكوّنا (‎home.main-links‎) لان سلة تغذّي التصنيفات لكل مكوّن
+  بحسب مساره ولا تمرّرها الى الصفحة. المكوّن يُدرج تلقائيا لانه ‎is_default‎،
+  ويرندر مع بقية عناصر التاجر في الحلقة اسفل الصفحة.
+#}
 
 {# ══════════ المناسبات ══════════ #}
 {% if theme.settings.get('bs_occasions_enabled', true) %}
