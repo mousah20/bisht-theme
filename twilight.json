@@ -24,6 +24,50 @@
     ],
     "settings": [
         {
+            "id": "bs_display_font",
+            "type": "select",
+            "label": {
+                "ar": "خط العناوين",
+                "en": "Display font"
+            },
+            "description": {
+                "ar": "خط العناوين الكبيرة. خط لوحة سلة يبقى لنصوص الواجهة.",
+                "en": "The face used for large headings. The Salla font panel keeps driving UI text."
+            },
+            "value": "Aref Ruqaa",
+            "required": false,
+            "options": [
+                {
+                    "label": {
+                        "ar": "عارف رقعة",
+                        "en": "Aref Ruqaa"
+                    },
+                    "value": "Aref Ruqaa"
+                },
+                {
+                    "label": {
+                        "ar": "أميري",
+                        "en": "Amiri"
+                    },
+                    "value": "Amiri"
+                },
+                {
+                    "label": {
+                        "ar": "ريم كوفي",
+                        "en": "Reem Kufi"
+                    },
+                    "value": "Reem Kufi"
+                },
+                {
+                    "label": {
+                        "ar": "خط لوحة سلة",
+                        "en": "Salla panel font"
+                    },
+                    "value": ""
+                }
+            ]
+        },
+        {
             "id": "bs_landing_enabled",
             "type": "boolean",
             "label": {

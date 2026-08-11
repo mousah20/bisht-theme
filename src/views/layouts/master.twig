@@ -20,6 +20,17 @@
     <link rel="stylesheet" href="{{ 'app.css'|asset }}">
     {# theme.font.path رابط كامل اصلا: تمريره على |cdn يضاعف المسار فيسقط الملف #}
     <link rel="stylesheet" href="{{ theme.font.url }}"/>
+
+    {#
+      خط العناوين: يختاره التاجر ويُحمّل من مصدر عام فلا يكلّف الحزمة بايتا واحدا.
+      لو اختار «خط لوحة سلة» لم نحمّل شيئا وورثت العناوين خط اللوحة.
+    #}
+    {% set bs_face = theme.settings.get('bs_display_font', 'Aref Ruqaa') %}
+    {% if bs_face %}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family={{ bs_face|replace({' ':'+'}) }}:wght@400;700&display=swap">
+    {% endif %}
     <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}"/>
 
     <script defer src="{{ 'app.js'|asset }}"></script>
@@ -34,6 +45,7 @@
     <style>
         :root {
             --font-main: '{{ theme.font.name }}';
+            {% if bs_face %}--font-secondary: '{{ bs_face }}';{% endif %}
             {# خط العرض هوية الثيم فلا يُلغى بخط التاجر؛ خط التاجر يقود واجهة الاستعمال #}
             --color-primary: {{ theme.color.primary }};
             --color-primary-dark: {{ theme.color.darker(0.15) }};
