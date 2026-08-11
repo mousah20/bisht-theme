@@ -18,7 +18,8 @@
         قالب بلا هذا الوسم يظهر نصا خاما بلا اي خطأ في الطرفية.
     #}
     <link rel="stylesheet" href="{{ 'app.css'|asset }}">
-    <link rel="stylesheet" href="{{ theme.font.path|cdn }}"/>
+    {# theme.font.path رابط كامل اصلا: تمريره على |cdn يضاعف المسار فيسقط الملف #}
+    <link rel="stylesheet" href="{{ theme.font.url }}"/>
     <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}"/>
 
     <script defer src="{{ 'app.js'|asset }}"></script>
@@ -33,7 +34,7 @@
     <style>
         :root {
             --font-main: '{{ theme.font.name }}';
-            --font-secondary: '{{ theme.font.name }}';
+            {# خط العرض هوية الثيم فلا يُلغى بخط التاجر؛ خط التاجر يقود واجهة الاستعمال #}
             --color-primary: {{ theme.color.primary }};
             --color-primary-dark: {{ theme.color.darker(0.15) }};
             --color-primary-light: {{ theme.color.lighter(0.15) }};
