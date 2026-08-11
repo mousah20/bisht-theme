@@ -19,6 +19,29 @@ function deepQuery(selector, root = document, out = []) {
   return out;
 }
 
+/**
+ * بيانات الخيارات كما ارسلها الخادم. المطابقة عليها اوثق من قراءة النص
+ * المرئي، لان النص المرئي يضم السعر الاضافي و«نفدت الكمية» فيلتقط ارقاما
+ * ليست مقاسا. نرجع قائمة {id, text} لنقر العنصر المطابق بمعرّفه.
+ */
+function serverOptions() {
+  const tag = document.querySelector('script[data-bs-options]');
+  if (!tag) return [];
+  let raw;
+  try {
+    raw = JSON.parse(tag.textContent || '[]');
+  } catch (e) {
+    return [];
+  }
+  const out = [];
+  (raw || []).forEach((o) => {
+    (o.details || []).forEach((d) => {
+      if (d && d.name && !d.is_out) out.push({ id: d.id, text: String(d.name) });
+    });
+  });
+  return out;
+}
+
 /** ازرار او مدخلات الخيار مع نصها المرئي */
 function optionNodes() {
   const nodes = deepQuery('label, button, .s-product-options-option-label, [data-option-value]');
@@ -36,8 +59,37 @@ function announce(msg, kind = 'ok') {
 }
 
 /** يطبّق المقاس على خيارات سلة، ويصرّح بما فعله بدل ان يفعله بصمت */
+/** ينقر العنصر المرئي الذي يمثل تفصيل الخيار بمعرّفه */
+function clickById(id) {
+  const hit = deepQuery(`[value="${id}"], [data-id="${id}"], #option-${id}, [for="option-${id}"]`)[0];
+  if (hit) {
+    hit.click();
+    return true;
+  }
+  return false;
+}
+
 function applyFit(fit) {
   if (!fit || !fit.length) return false;
+
+  // المسار الاوثق: بيانات الخادم
+  const srv = serverOptions();
+  if (srv.length) {
+    const hit = srv.find((o) => optionMatchesFit(o.text, fit));
+    if (hit && clickById(hit.id)) {
+      announce(`اخترنا مقاسك: طول ${fit.length} · كتف ${fit.shoulder}`);
+      return true;
+    }
+    const i = nearestOption(srv.map((o) => o.text), fit);
+    if (i > -1 && clickById(srv[i].id)) {
+      announce(`لا يوجد مقاسك تماما — اخترنا الاقرب: ${srv[i].text}`, 'near');
+      return true;
+    }
+    announce('مقاسك غير متاح في هذا البشت — الخياطة بالقياس تناسبك.', 'none');
+    return false;
+  }
+
+  // المسار الاحتياطي: قراءة النص المرئي
   const opts = optionNodes();
   if (!opts.length) return false;
 

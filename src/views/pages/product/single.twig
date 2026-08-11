@@ -43,7 +43,19 @@
                 #}
                 <p class="bs-applied" data-fit-applied hidden></p>
 
-                <salla-product-options product-id="{{ product.id }}" data-testid="store-product-options"></salla-product-options>
+                {#
+                  ‼ ‎salla-product-options‎ لا يجلب الخيارات بنفسه: تُمرّر اليه في
+                    السمة ‎options‎. بلا هذه السمة يرندر صفرا بلا اي خطأ، فتبدو
+                    الصفحة سليمة والمقاسات غائبة.
+                #}
+                {% if product.options|length %}
+                    <salla-product-options data-testid="store-product-options"
+                                           options="{{ product.options }}"
+                                           product-id="{{ product.id }}"></salla-product-options>
+
+                    {# البيانات نفسها لمحرك الملاءمة: مطابقة على القيم لا على النص المرئي #}
+                    <script type="application/json" data-bs-options>{{ product.options|json_encode|raw }}</script>
+                {% endif %}
 
                 {% if theme.settings.get('bs_size_guide_enabled', true) %}
                     <a class="bs-applied__link" href="#bs-fit">{{ trans('bisht.fit_cta') }}</a>
