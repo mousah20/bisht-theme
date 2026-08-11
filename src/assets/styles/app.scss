@@ -23,10 +23,13 @@
   --bs-bone: #ede7dc;
   --bs-bone-dim: #a9a398;
   --bs-mute: #6e6a61;
-  /* لوحة الوان سلة تضبط ‎--color-primary‎. النحاس يرثه فلو غيّره التاجر
-     تغيّر العنصر الوحيد الذي يلمع في الثيم كله معه. */
-  --bs-brass: var(--color-primary, #8a7a55);
-  --bs-brass-hi: var(--color-primary-dark, #c4ae7c);
+  /* النحاس هوية الثيم فيبقى ثابتا: لو ورث ‎--color-primary‎ صار لون
+     العناوين تابعا للوحة التاجر، فمتجر بلون تركوازي يقلب الهوية كلها.
+     لون التاجر يقود ما هو تفاعلي وحده عبر ‎--bs-accent‎ ادناه. */
+  --bs-brass: #8a7a55;
+  --bs-brass-hi: #c4ae7c;
+  --bs-accent: var(--color-primary, #8a7a55);
+  --bs-accent-dark: var(--color-primary-dark, #6f6244);
   --bs-oxblood: #5b1f26;
   --bs-line: rgba(138, 122, 85, 0.22);
 
@@ -88,9 +91,10 @@ h1, h2, h3, h4 {
   line-height: 1.1;
 }
 
-::selection { background: var(--bs-brass-hi); color: var(--bs-ink); }
+/* ما هو تفاعلي يتبع لون التاجر، وما هو هوية يبقى نحاسا */
+::selection { background: var(--bs-accent); color: var(--bs-ink); }
 
-:focus-visible { outline: 2px solid var(--bs-brass-hi); outline-offset: 3px; }
+:focus-visible { outline: 2px solid var(--bs-accent); outline-offset: 3px; }
 
 /* الارقام في الجداول والاسعار تُصطف */
 .bs-num, .bs-spec b, .bs-price strong { font-variant-numeric: tabular-nums; }
