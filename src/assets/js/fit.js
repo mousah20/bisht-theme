@@ -68,7 +68,10 @@ export function nearestOption(texts, fit) {
     const nums = (String(t).match(NUM) || []).map(Number).filter((n) => n > 100 && n < 220);
     if (!nums.length) return;
     const d = Math.min(...nums.map((n) => Math.abs(n - fit.length)));
-    if (d < gap) {
+    const longer = Math.max(...nums) > fit.length;
+    // عند تعادل الفرق نرجّح الاطول: البشت الاقصر عيب لانه لا يصل الكعب،
+    // والاطول قليلا يُلبس ولا يُلاحظ.
+    if (d < gap || (d === gap && longer)) {
       gap = d;
       best = i;
     }
