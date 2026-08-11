@@ -1,5 +1,6 @@
 /** القائمة: مستويات بلا مكتبة، وبحالة معلنة للقارئ الالي */
-document.addEventListener('DOMContentLoaded', () => {
+import { ready } from '../ready';
+ready(() => {
   document.querySelectorAll('[data-menu-toggle]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const panel = btn.nextElementSibling;

@@ -1,5 +1,6 @@
 /** الرئيسية: شريحتا الغلاف، والتمرير الذي يقود الدخول */
 import { sweep } from './partials/curtain';
+import { ready } from './ready';
 
 function slides() {
   const wrap = document.querySelector('[data-slides]');
@@ -72,7 +73,7 @@ function pullToEnter() {
   }, { passive: true });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+ready(() => {
   slides();
   pullToEnter();
   document.querySelectorAll('[data-land-enter]').forEach((a) => {

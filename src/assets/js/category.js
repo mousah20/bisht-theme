@@ -10,6 +10,7 @@
  */
 import { resolveFit } from './size-guide';
 import { saveFit, loadFit, clearFit } from './fit';
+import { ready } from './ready';
 
 function paintSummary(root, fit) {
   const out = root.querySelector('[data-rail-out]');
@@ -108,6 +109,6 @@ function mountRail(root) {
   if (state.height) recompute();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+ready(() => {
   document.querySelectorAll('[data-fit-rail]').forEach(mountRail);
 });

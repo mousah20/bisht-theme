@@ -7,8 +7,9 @@ import { mountCurtain } from './partials/curtain';
 import { mountDrawer } from './partials/drawer';
 import { mountReveal } from './partials/reveal';
 import { mountDock } from './partials/dock';
+import { ready } from './ready';
 
-document.addEventListener('DOMContentLoaded', () => {
+ready(() => {
   mountReveal();
   mountCurtain();
   mountDrawer();

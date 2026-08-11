@@ -26,6 +26,7 @@ const BUILD = { slim: -1, normal: 0, wide: 2, xwide: 4 };
 const USE = { formal: 3, daily: 0, work: -2 };
 
 import { saveFit, loadFit } from './fit';
+import { ready } from './ready';
 
 export function resolveFit({ height, build = 'normal', use = 'daily' }) {
   const h = Number(height);
@@ -132,6 +133,6 @@ export function mountSizeGuide(root) {
   paint();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+ready(() => {
   document.querySelectorAll('[data-size-guide]').forEach(mountSizeGuide);
 });

@@ -1,1 +1,1 @@
-document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll("[data-fit-reminder]").forEach(e=>{e.hidden=!1})});
+(()=>{"use strict";var e;e=()=>{document.querySelectorAll("[data-fit-reminder]").forEach(e=>{e.hidden=!1})},"undefined"!=typeof window&&window.salla&&"function"==typeof salla.onReady?salla.onReady(e):"loading"===document.readyState?document.addEventListener("DOMContentLoaded",e):e()})();

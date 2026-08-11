@@ -8,6 +8,7 @@
  */
 import { mountSizeGuide } from './size-guide';
 import { loadFit, optionMatchesFit, nearestOption } from './fit';
+import { ready } from './ready';
 
 /** يجمع العناصر من الصفحة وجذور الظل معا */
 function deepQuery(selector, root = document, out = []) {
@@ -77,7 +78,7 @@ function whenOptionsReady(cb) {
   setTimeout(() => ob.disconnect(), 12000);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+ready(() => {
   document.querySelectorAll('[data-size-guide]').forEach(mountSizeGuide);
 
   // نتيجة الحاسبة تُطبّق فورا

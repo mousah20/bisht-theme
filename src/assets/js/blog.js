@@ -1,5 +1,6 @@
 /** المدونة: شريط تقدم القراءة — لا شيء يقفز اثناء القراءة */
-document.addEventListener('DOMContentLoaded', () => {
+import { ready } from './ready';
+ready(() => {
   const bar = document.querySelector('[data-read-progress]');
   const art = document.querySelector('[data-article]');
   if (!bar || !art) return;
