@@ -130,7 +130,11 @@
 
 /* ---------- وسم البطاقة ---------- */
 .bs-fitb {
+  /* جسم البطاقة شبكة، فالوسم يمتد بعرضها ما لم نحصره في محتواه */
   display: inline-block;
+  justify-self: start;
+  inline-size: max-content;
+  max-inline-size: 100%;
   margin-block-start: 0.5rem;
   margin-inline-end: 0.4rem;
   padding: 0.24rem 0.62rem;
@@ -150,6 +154,9 @@
   /* مقاس اخر: مكتوم لا محذوف — الاخفاء بطلب الزائر وحده */
   &--no { background: rgb(110 106 97 / 16%); color: var(--bs-mute); }
 }
+
+/* الوسوم تتجاور في سطر واحد */
+.bs-pcard__body { row-gap: 0.4rem; }
 
 /* البطاقة المطابقة ترتفع درجة واحدة بلا حركة مبهرجة */
 [data-bs-match='yes'] .s-product-card-entry {
