@@ -1,5 +1,9 @@
 {% extends "layouts.master" %}
 
+{% block head_scripts %}
+    <script defer src="{{ 'category.js'|asset }}"></script>
+{% endblock %}
+
 {% block content %}
 <section class="bs-secs bs-pad" data-testid="store-category">
     <salla-breadcrumb data-testid="store-breadcrumb"></salla-breadcrumb>
@@ -11,6 +15,42 @@
 
     {% if category.description %}
         <p class="bs-lede bs-rise" style="margin-block-end:2rem">{{ category.description|striptags }}</p>
+    {% endif %}
+
+    {#
+      شريط القامة: تصفية بمعيار البشت لا بالخصائص العامة.
+      يسبق ‎salla-filters‎ لان القامة هي اول ما يستبعد، والباقي تفصيل.
+    #}
+    {% if theme.settings.get('bs_size_guide_enabled', true) %}
+    <div class="bs-rail bs-rise" data-fit-rail>
+        <div class="bs-rail__q">
+            <label for="bs-rail-h">{{ trans('bisht.rail_height') }}</label>
+            <input id="bs-rail-h" type="number" inputmode="numeric" min="140" max="215" step="1"
+                   placeholder="175" data-rail-height>
+        </div>
+
+        <div class="bs-rail__q">
+            <span>{{ trans('bisht.fit_step_build') }}</span>
+            <div class="bs-fit__opts" data-rail-group="build">
+                <button type="button" data-value="slim">{{ trans('bisht.build_slim') }}</button>
+                <button type="button" data-value="normal" aria-pressed="true">{{ trans('bisht.build_normal') }}</button>
+                <button type="button" data-value="wide">{{ trans('bisht.build_wide') }}</button>
+                <button type="button" data-value="xwide">{{ trans('bisht.build_xwide') }}</button>
+            </div>
+        </div>
+
+        <div class="bs-rail__out" data-rail-out hidden>
+            <span class="bs-eyebrow">{{ trans('bisht.your_size') }}</span>
+            <strong data-rail-label></strong>
+            <label class="bs-rail__only">
+                <input type="checkbox" data-rail-only>
+                {{ trans('bisht.rail_only_mine') }}
+            </label>
+            <button type="button" class="bs-rail__reset" data-rail-reset>{{ trans('bisht.rail_reset') }}</button>
+        </div>
+
+        <p class="bs-rail__note" data-rail-unknown hidden></p>
+    </div>
     {% endif %}
 
     <salla-filters data-testid="store-filters"></salla-filters>

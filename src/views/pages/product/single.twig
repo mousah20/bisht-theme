@@ -37,7 +37,17 @@
 
             {# الخيارات والسعر من سلة: لا نبني منطق التسعير ولا المخزون #}
             <div style="margin-block-start:1.9rem">
+                {#
+                  اعلان صريح لما فعله المحرك: اختار، او اختار الاقرب، او لم يجد.
+                  اختيار صامت يبدو عطلا، والزائر يستحق ان يعرف من اختار له.
+                #}
+                <p class="bs-applied" data-fit-applied hidden></p>
+
                 <salla-product-options product-id="{{ product.id }}" data-testid="store-product-options"></salla-product-options>
+
+                {% if theme.settings.get('bs_size_guide_enabled', true) %}
+                    <a class="bs-applied__link" href="#bs-fit">{{ trans('bisht.fit_cta') }}</a>
+                {% endif %}
             </div>
 
             <div class="bs-price" style="margin-block-start:1.6rem">
@@ -65,7 +75,7 @@
 
     {# حاسبة القياس: تحت المنتج لا في نافذة، لان القياس جزء من القرار لا ملحق به #}
     {% if theme.settings.get('bs_size_guide_enabled', true) %}
-        <section style="margin-block-start:4rem" class="bs-rise">
+        <section id="bs-fit" style="margin-block-start:4rem" class="bs-rise">
             <div class="bs-col__head" style="margin-block-end:1.6rem">
                 <h2>{{ trans('bisht.size_guide') }}</h2>
                 <span>{{ trans('bisht.length') }} · {{ trans('bisht.shoulder') }}</span>

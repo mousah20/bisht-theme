@@ -16,6 +16,7 @@ module.exports = {
     product: asset('js/product.js'),
     'size-guide': asset('js/size-guide.js'),
     blog: asset('js/blog.js'),
+    category: asset('js/category.js'),
     checkout: asset('js/cart.js'),
     'product-card': asset('js/partials/product-card.js'),
     'main-menu': asset('js/partials/main-menu.js'),

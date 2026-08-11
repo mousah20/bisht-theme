@@ -25,6 +25,8 @@ const BUILD = { slim: -1, normal: 0, wide: 2, xwide: 4 };
 // سماحية الطول بحسب الاستعمال: الرسمي اطول قليلا، واليومي اقصر لسهولة الحركة
 const USE = { formal: 3, daily: 0, work: -2 };
 
+import { saveFit, loadFit } from './fit';
+
 export function resolveFit({ height, build = 'normal', use = 'daily' }) {
   const h = Number(height);
   if (!h || Number.isNaN(h)) return null;
@@ -85,6 +87,9 @@ export function mountSizeGuide(root) {
       });
     }
 
+    // نحفظ المدخلات لا الناتج: التصنيف والبطاقات تقرأها بعد ذلك
+    saveFit({ ...state, length: fit.length, shoulder: fit.shoulder, row: fit.row });
+
     root.dispatchEvent(new CustomEvent('bisht:fit', { detail: fit, bubbles: true }));
   };
 
@@ -99,6 +104,22 @@ export function mountSizeGuide(root) {
       paint();
     });
   });
+
+  // زائر عاد: نعيد مدخلاته بدل ان نسأله مرة ثانية
+  const saved = loadFit();
+  if (saved) {
+    state.height = saved.height;
+    state.build = saved.build || 'normal';
+    state.use = saved.use || 'daily';
+    const hi = root.querySelector('[data-fit-height]');
+    if (hi) hi.value = saved.height;
+    root.querySelectorAll('[data-fit-group]').forEach((group) => {
+      const want = state[group.dataset.fitGroup];
+      group.querySelectorAll('button[data-value]').forEach((b) =>
+        b.setAttribute('aria-pressed', String(b.dataset.value === want))
+      );
+    });
+  }
 
   const input = root.querySelector('[data-fit-height]');
   if (input) {
