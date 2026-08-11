@@ -13,8 +13,34 @@
     <meta name="theme-color" content="#0F1116">
     {{ theme.settings.set('placeholder', 'images/placeholder.png') }}
 
+    {#
+      ‼ سلة لا تُدخل اصول الثيم تلقائيا: القالب هو من يربطها.
+        قالب بلا هذا الوسم يظهر نصا خاما بلا اي خطأ في الطرفية.
+    #}
+    <link rel="stylesheet" href="{{ 'app.css'|asset }}">
+    <link rel="stylesheet" href="{{ theme.font.path|cdn }}"/>
+    <link rel="stylesheet" href="{{ 'fonts/sallaicons.css'|cdn }}"/>
+
+    <script defer src="{{ 'app.js'|asset }}"></script>
     <script defer data-cfasync="false" crossorigin="anonymous" src="{{ 'product-card.js'|asset }}"></script>
     <script defer src="{{ 'main-menu.js'|asset }}"></script>
+
+    {#
+      لوحتا «الخطوط» و«الالوان» عند التاجر تكتبان في theme.font و theme.color،
+      ولا تصلان الى الانماط الا اذا صرّحنا بها هنا. نظام بشت يقرأها
+      عبر ‎--font-main/--font-secondary/--color-primary‎ ثم يعود لبدائله.
+    #}
+    <style>
+        :root {
+            --font-main: '{{ theme.font.name }}';
+            --font-secondary: '{{ theme.font.name }}';
+            --color-primary: {{ theme.color.primary }};
+            --color-primary-dark: {{ theme.color.darker(0.15) }};
+            --color-primary-light: {{ theme.color.lighter(0.15) }};
+            --color-primary-reverse: {{ theme.color.reverse_text }};
+            --color-main: {{ theme.color.primary }};
+        }
+    </style>
 
     {% block head_scripts %}{% endblock %}
 
