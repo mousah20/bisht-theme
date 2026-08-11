@@ -10,8 +10,8 @@
         <h2>{{ title ?: trans('bisht.all_bishts') }}</h2>
         {% if note %}<span>{{ note }}</span>{% endif %}
     </div>
-    <salla-products-list source="{{ source ?: 'selected' }}"
+    <bisht-products source="{{ source ?: 'selected' }}"
                          source-value="{{ products ? products|json_encode : '' }}"
                          limit="{{ limit|default(6) }}"
-                         data-testid="store-home-picked-list"></salla-products-list>
+                         data-testid="store-home-picked-list"></bisht-products>
 </section>

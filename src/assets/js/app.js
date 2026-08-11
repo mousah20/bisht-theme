@@ -7,6 +7,7 @@ import { mountCurtain } from './partials/curtain';
 import { mountDrawer } from './partials/drawer';
 import { mountReveal } from './partials/reveal';
 import { mountDock } from './partials/dock';
+import './partials/products-grid';
 import { ready } from './ready';
 
 ready(() => {

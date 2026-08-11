@@ -281,3 +281,39 @@
 @media (pointer: coarse) {
   .bs-pcard:hover .bs-pcard__media img { transform: none; }
 }
+
+/* ---------- شبكة المنتجات: يبنيها الثيم لان مكوّن سلة لا يتحلّل ---------- */
+.bs-pgrid {
+  display: grid;
+  gap: var(--bs-s3);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  &__ghost {
+    aspect-ratio: 3 / 4.4;
+    border-radius: var(--bs-r-md);
+    background: linear-gradient(100deg, var(--bs-ink-3) 30%, rgb(237 231 220 / 6%) 50%, var(--bs-ink-3) 70%);
+    background-size: 220% 100%;
+    animation: bs-sheen 1.5s linear infinite;
+  }
+
+  &__msg {
+    grid-column: 1 / -1;
+    margin: 0;
+    padding: var(--bs-s5) 0;
+    text-align: center;
+    color: var(--bs-mute);
+    font-size: 0.9rem;
+  }
+}
+
+@keyframes bs-sheen {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+@media (min-width: 700px) { .bs-pgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .bs-pgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .bs-pgrid__ghost { animation: none; }
+}
