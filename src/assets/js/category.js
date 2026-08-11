@@ -23,8 +23,18 @@ function paintSummary(root, fit) {
   out.querySelector('[data-rail-label]').textContent = `طول ${fit.length} · كتف ${fit.shoulder}`;
 }
 
+/**
+ * ‼ العطل الذي امسكه الاختبار الحي: كنا نبحث عن ‎[data-bs-fit="1"]‎ وهي سمة
+ *   تصميم قديم كان يزيّن بطاقات سلة. البطاقة التي يبنيها الثيم الان تضع
+ *   ‎data-bs-ready‎، فكانت التصفية تجد صفر بطاقات ولا تخفي شيئا بلا اي خطأ.
+ */
+function cardNodes() {
+  const own = document.querySelectorAll('custom-salla-product-card[data-bs-ready="1"]');
+  return own.length ? [...own] : [...document.querySelectorAll('[data-bs-fit="1"]')];
+}
+
 function applyFilter(onlyMine) {
-  const cards = [...document.querySelectorAll('[data-bs-fit="1"]')];
+  const cards = cardNodes();
   let unknown = 0;
   cards.forEach((c) => {
     const wrap = c.closest('.s-products-list-inner > *, .swiper-slide') || c;
@@ -96,8 +106,7 @@ function mountRail(root) {
       if (input) input.value = '';
       if (toggle) toggle.checked = false;
       document.querySelectorAll('.bs-fitb').forEach((b) => b.remove());
-      document.querySelectorAll('[data-bs-fit]').forEach((c) => {
-        delete c.dataset.bsFit;
+      cardNodes().forEach((c) => {
         delete c.dataset.bsMatch;
         const wrap = c.closest('.s-products-list-inner > *, .swiper-slide') || c;
         wrap.hidden = false;
