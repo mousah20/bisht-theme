@@ -14,7 +14,7 @@
  * قرار مقصود: البطاقة لا تُخفى ابدا من هنا. الاخفاء قرار صفحة التصنيف
  * وحدها، وبطلب صريح من الزائر.
  */
-import { loadFit, optionMatchesFit } from '../fit';
+import { loadFit, optionMatchesFit, toAscii } from '../fit';
 import { ready } from '../ready';
 
 const NUM = /(\d{2,3})/g;
@@ -37,7 +37,7 @@ function sizeTexts(product) {
 /** نطاق الطول المتاح في هذا البشت — يُعرض للجميع لا لصاحب القياس وحده */
 function lengthRange(texts) {
   const nums = texts
-    .flatMap((t) => (String(t).match(NUM) || []).map(Number))
+    .flatMap((t) => (toAscii(t).match(NUM) || []).map(Number))
     .filter((n) => n >= 120 && n <= 200);
   if (!nums.length) return '';
   const lo = Math.min(...nums);

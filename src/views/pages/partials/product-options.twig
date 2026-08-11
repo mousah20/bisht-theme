@@ -1,0 +1,55 @@
+{#
+  خيارات المنتج — يبنيها الثيم لا مكوّن سلة.
+
+  ‼ سببان لهذا القرار:
+    ١ ‎salla-product-options‎ لم يرندر شيئا في المعاينة حتى بعد تمرير
+      ‎options‎ اليه، فلا نبني ميزة على مكوّن لا يظهر.
+    ٢ محرك الملاءمة يحتاج ان ينقر المقاس المطابق. النقر على DOM نبنيه بايدينا
+      قابل للتحقق، والنقر داخل جذر ظل مكوّن خارجي رهن بتفاصيله الداخلية.
+
+  الشرط الوحيد لسلامة السلة: اسماء الحقول ‎options[<optionId>]‎ كما تتوقعها سلة.
+  المقاس النافد يُعرض معطلا ولا يُخفى — الاخفاء يخفي المعلومة لا المشكلة.
+#}
+{% if product.options|length %}
+    <div class="bs-opts" data-bs-opts>
+        {% for option in product.options %}
+            <div class="bs-opts__group" data-option-id="{{ option.id }}">
+                <span class="bs-eyebrow">{{ option.name }}{% if option.required %} *{% endif %}</span>
+
+                {% if option.type in ['single-option', 'multi-options', 'thumbnail', 'color'] %}
+                    <div class="bs-sizes" role="radiogroup" aria-label="{{ option.name }}">
+                        {% for detail in option.details %}
+                            <button type="button"
+                                    class="bs-sizes__btn"
+                                    data-id="{{ detail.id }}"
+                                    data-option="{{ option.id }}"
+                                    value="{{ detail.id }}"
+                                    aria-pressed="{{ detail.is_selected ? 'true' : 'false' }}"
+                                    {{ detail.is_out ? 'disabled' : '' }}
+                                    data-testid="store-product-option-{{ detail.id }}">
+                                {{ detail.name }}
+                                {% if detail.additional_price %}
+                                    <em>+{{ detail.additional_price|money }}</em>
+                                {% endif %}
+                                {% if detail.is_out %}
+                                    <s>{{ trans('bisht.sold_out') }}</s>
+                                {% endif %}
+                            </button>
+                        {% endfor %}
+                    </div>
+
+                    {# القيمة الفعلية التي تُرسل الى السلة #}
+                    <input type="hidden" name="options[{{ option.id }}]"
+                           data-option-input="{{ option.id }}"
+                           value="{% for d in option.details %}{{ d.is_selected ? d.id : '' }}{% endfor %}">
+                {% else %}
+                    {# الانواع الحرة (نص، تاريخ، رقم…) تبقى كما تعطيها سلة #}
+                    {{ option.element|raw }}
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+
+    {# البيانات نفسها لمحرك الملاءمة: مطابقة على القيم لا على النص المرئي #}
+    <script type="application/json" data-bs-options>{{ product.options|json_encode|raw }}</script>
+{% endif %}

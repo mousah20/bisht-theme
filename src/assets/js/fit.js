@@ -14,6 +14,17 @@ const KEY = 'bisht:fit';
 /** ما نستنتجه من نص خيار سلة: «طول 162 · كتف 54» ⇒ {len:162, sh:54} */
 const NUM = /(\d{2,3})/g;
 
+/**
+ * ‼ مصيدة كلّفتنا مطابقة فاشلة بصمت: متاجر سلة تكتب المقاسات بالارقام
+ *   الهندية «طول ١٦٥ · كتف ٥٠»، و‎\d‎ في جافاسكربت لا يطابق ٠-٩ العربية
+ *   ولا ۰-۹ الفارسية. فكل مطابقة تمر على هذه الدالة اولا.
+ */
+export function toAscii(str) {
+  return String(str == null ? '' : str)
+    .replace(/[٠-٩]/g, (d) => String(d.charCodeAt(0) - 0x0660))
+    .replace(/[۰-۹]/g, (d) => String(d.charCodeAt(0) - 0x06f0));
+}
+
 export function saveFit(input) {
   try {
     localStorage.setItem(KEY, JSON.stringify({ ...input, at: Date.now() }));
@@ -48,7 +59,7 @@ export function clearFit() {
  */
 export function optionMatchesFit(text, fit) {
   if (!text || !fit || !fit.length) return false;
-  const nums = String(text).match(NUM);
+  const nums = toAscii(text).match(NUM);
   if (!nums) return false;
   const set = nums.map(Number);
   const lenHit = set.includes(fit.length);
@@ -65,7 +76,7 @@ export function nearestOption(texts, fit) {
   let best = -1;
   let gap = Infinity;
   texts.forEach((t, i) => {
-    const nums = (String(t).match(NUM) || []).map(Number).filter((n) => n > 100 && n < 220);
+    const nums = (toAscii(t).match(NUM) || []).map(Number).filter((n) => n > 100 && n < 220);
     if (!nums.length) return;
     const d = Math.min(...nums.map((n) => Math.abs(n - fit.length)));
     const longer = Math.max(...nums) > fit.length;

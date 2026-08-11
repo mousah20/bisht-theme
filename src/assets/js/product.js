@@ -59,14 +59,34 @@ function announce(msg, kind = 'ok') {
 }
 
 /** يطبّق المقاس على خيارات سلة، ويصرّح بما فعله بدل ان يفعله بصمت */
-/** ينقر العنصر المرئي الذي يمثل تفصيل الخيار بمعرّفه */
+/** ينقر زر المقاس الذي يحمل هذا المعرّف. ازرارنا لا ازرار مكوّن خارجي. */
 function clickById(id) {
-  const hit = deepQuery(`[value="${id}"], [data-id="${id}"], #option-${id}, [for="option-${id}"]`)[0];
-  if (hit) {
-    hit.click();
+  const btn =
+    document.querySelector(`.bs-sizes__btn[data-id="${id}"]:not([disabled])`) ||
+    deepQuery(`[value="${id}"], [data-id="${id}"]`)[0];
+  if (btn) {
+    btn.click();
     return true;
   }
   return false;
+}
+
+/** يمسك اختيار المقاس: يبرز الزر ويكتب القيمة في الحقل الذي ترسله السلة */
+function bindSizeButtons() {
+  document.querySelectorAll('.bs-sizes').forEach((group) => {
+    group.addEventListener('click', (e) => {
+      const b = e.target.closest('.bs-sizes__btn');
+      if (!b || b.disabled) return;
+      group.querySelectorAll('.bs-sizes__btn').forEach((x) =>
+        x.setAttribute('aria-pressed', String(x === b))
+      );
+      const input = document.querySelector(`[data-option-input="${b.dataset.option}"]`);
+      if (input) {
+        input.value = b.dataset.id;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    });
+  });
 }
 
 function applyFit(fit) {
@@ -131,6 +151,7 @@ function whenOptionsReady(cb) {
 }
 
 ready(() => {
+  bindSizeButtons();
   document.querySelectorAll('[data-size-guide]').forEach(mountSizeGuide);
 
   // نتيجة الحاسبة تُطبّق فورا
