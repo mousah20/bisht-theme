@@ -237,3 +237,8 @@ h1, h2, h3, h4 {
 @import './blocks/curtain';
 @import './blocks/mobile';
 @import './salla';
+
+/* اغلفة هوكس سلة (نمط رائد PR ‎#930): الغلاف الفارغ لا يشغل مساحة،
+   واول بلوك محقون داخله يبدا بلا هامش علوي */
+.s-blocks-wrapper:empty { display: none; }
+.s-blocks-wrapper .s-block:first-child { margin-block-start: 0; }

@@ -22,7 +22,12 @@
         </div>
 
         <div>
-            {% hook 'product.single.before_product_info' %}
+            {#
+                Hook: product.single.before_product_info
+                Fires before the main product information section (images, title, price, etc.).
+                Use this hook to inject custom content or components above the product details area.
+            #}
+            <div class="s-blocks-wrapper s-before-product-info !mt-0">{% hook 'product.single.before_product_info' %}</div>
             <h1 class="bs-row__name">{{ product.name }}</h1>
 
             {% if product.description %}
@@ -115,11 +120,21 @@
         </section>
     {% endif %}
 
-    {% hook 'product.single.before_customer_reviews' %}
+    {#
+        Hook: product.single.before_customer_reviews
+        Fires before the customer reviews/comments section.
+        Use this hook to inject content between the product info and the reviews block.
+    #}
+    <div class="s-blocks-wrapper s-before-reviews">{% hook 'product.single.before_customer_reviews' %}</div>
 
     <salla-comments data-testid="store-product-comments" product-id="{{ product.id }}"></salla-comments>
 
-    {% hook 'product.single.before_product_recommendations' %}
+    {#
+        Hook: product.single.before_product_recommendations
+        Fires before the similar/related products slider.
+        Use this hook to inject content between the reviews and the recommendations section.
+    #}
+    <div class="s-blocks-wrapper s-before-related">{% hook 'product.single.before_product_recommendations' %}</div>
 
     {# منتجات مشابهة: مصدر سلة الجاهز، والعنوان من مفاتيحها الاساسية #}
     <section style="margin-block-start:4rem">
@@ -127,7 +142,12 @@
                                block-title="{{ trans('pages.products.similar_products') }}" display-all-url></salla-products-slider>
     </section>
 
-    {% hook 'product.single.after_product_recommendations' %}
+    {#
+        Hook: product.single.after_product_recommendations
+        Fires after the similar/related products slider, at the very end of the product page content.
+        Use this hook to append content below the recommendations section.
+    #}
+    <div class="s-blocks-wrapper s-after-related">{% hook 'product.single.after_product_recommendations' %}</div>
 </article>
 
 {# الشرفة السفلى: على الجوال زر الشراء لا يُبحث عنه #}

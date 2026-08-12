@@ -7,7 +7,12 @@
         <span class="bs-num">{{ products.total ?? '' }}</span>
     </div>
 
-    {% hook 'product.index.before_products_group_with_filter' %}
+    {#
+        Hook: product.index.before_products_group_with_filter
+        Fires before the products grid and filter sidebar wrapper.
+        Use this hook to inject content above the products listing area.
+    #}
+    <div class="s-blocks-wrapper s-before-products-list !mt-0">{% hook 'product.index.before_products_group_with_filter' %}</div>
 
     <salla-filters data-testid="store-filters"></salla-filters>
 
@@ -37,8 +42,18 @@
         {% endfor %}
     </div>
 
-    {% hook 'product.index.after_products_group_with_filter' %}
+    {#
+        Hook: product.index.after_products_group_with_filter
+        Fires after the products grid and filter sidebar wrapper.
+        Use this hook to inject content below the products listing area.
+    #}
+    <div class="s-blocks-wrapper s-after-products-list">{% hook 'product.index.after_products_group_with_filter' %}</div>
 
-    {% hook 'product.index.after_testimonials' %}
+    {#
+        Hook: product.index.after_testimonials
+        Fires after the testimonials (store reviews) section.
+        Use this hook to inject content below the testimonials area.
+    #}
+    <div class="s-blocks-wrapper s-after-testimonials">{% hook 'product.index.after_testimonials' %}</div>
 </section>
 {% endblock %}

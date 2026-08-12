@@ -6,6 +6,14 @@
 {% endblock %}
 
 {% block content %}
+{% if page.type == 'customised' %}
+    {#
+        Hook: information_page.information_page
+        Fires before the main informative page content section.
+        Use this hook to inject custom content or components above the page content area.
+    #}
+    <div class="s-blocks-wrapper s-information-page !mt-0">{% hook 'information_page.information_page' %}</div>
+{% else %}
 <article class="bs-article bs-pad" data-testid="store-page-single">
     <header class="bs-article__head">
         <h1 class="bs-article__title">{{ page.title }}</h1>
@@ -13,12 +21,11 @@
 
     <div class="bs-prose">{{ page.content|raw }}</div>
 
-    {% hook 'information_page.information_page' %}
-
     {% if page.slug == 'size-guide' %}
         <div style="max-width:65ch;margin-inline:auto;margin-block-start:2.6rem">
             {% include 'components.size-guide' %}
         </div>
     {% endif %}
 </article>
+{% endif %}
 {% endblock %}
