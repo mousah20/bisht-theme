@@ -60,16 +60,35 @@ function announce(msg, kind = 'ok') {
 }
 
 /** يطبّق المقاس على خيارات سلة، ويصرّح بما فعله بدل ان يفعله بصمت */
-/** ينقر زر المقاس الذي يحمل هذا المعرّف. ازرارنا لا ازرار مكوّن خارجي. */
+/**
+ * يحدد المقاس الذي يحمل هذا المعرّف داخل ‎salla-product-options‎.
+ * ‼ المكوّن يرندر ‎single-option‎ قائمةَ ‎<select>‎، والنقر على ‎<option>‎
+ *   لا يغيّر قيمة القائمة — يجب ضبط ‎select.value‎ واطلاق ‎change‎،
+ *   والا صرّحنا بنجاح لم يقع (علة مسكها الاختبار الحي 2026-08-12).
+ */
 function clickById(id) {
-  const btn =
+  const el =
     document.querySelector(`.bs-sizes__btn[data-id="${id}"]:not([disabled])`) ||
     deepQuery(`[value="${id}"], [data-id="${id}"]`)[0];
-  if (btn) {
-    btn.click();
-    return true;
+  if (!el) return false;
+
+  if (el.tagName === 'OPTION') {
+    const sel = el.closest('select');
+    if (!sel || el.disabled) return false;
+    sel.value = el.value;
+    sel.dispatchEvent(new Event('input', { bubbles: true }));
+    sel.dispatchEvent(new Event('change', { bubbles: true }));
+    return sel.value === el.value;
   }
-  return false;
+
+  if (el.tagName === 'INPUT' && (el.type === 'radio' || el.type === 'checkbox')) {
+    if (el.disabled) return false;
+    el.click();
+    return el.checked;
+  }
+
+  el.click();
+  return true;
 }
 
 /** يمسك اختيار المقاس: يبرز الزر ويكتب القيمة في الحقل الذي ترسله السلة */
