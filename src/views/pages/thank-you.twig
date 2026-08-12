@@ -8,6 +8,10 @@
     </header>
     <div style="max-width:70ch;margin-inline:auto">
         <salla-order-details order-id="{{ order.id }}" data-testid="store-order-details"></salla-order-details>
+
+        {# شحنات الطلب وقسيمة الطلب القادم: يرندران فارغين اذا لم يكونا #}
+        <salla-order-shipments style="display:block;margin-block-start:1.4rem"></salla-order-shipments>
+        <salla-next-order-coupon data-testid="store-thankyou-coupon"></salla-next-order-coupon>
     </div>
 </section>
 {% endblock %}

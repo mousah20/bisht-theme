@@ -2,4 +2,10 @@
 
 {% block customer_content %}
     <salla-profile data-testid="store-profile"></salla-profile>
+
+    {# توثيق الجوال/الايميل واعدادات الاشعارات — مكونا سلة القياسيان #}
+    <salla-verify data-testid="store-profile-verify"></salla-verify>
+    <salla-user-settings data-testid="store-profile-settings"
+                         {{ user.is_notifiable ? 'is-notifiable' : '' }}
+                         style="display:block;margin-block-start:2rem"></salla-user-settings>
 {% endblock %}

@@ -15,7 +15,33 @@
     </p>
 
     <div style="max-width:70ch;margin-inline:auto">
+        {# عرض مشروط من التاجر: «اشتر بـX واحصل على Y» — يرندر فارغا اذا لم يكن #}
+        <salla-conditional-offer data-testid="store-cart-conditional-offer"></salla-conditional-offer>
+
         <salla-cart-summary page="cart" data-testid="store-cart-summary-page"></salla-cart-summary>
+
+        {# عروض بنود السلة: شريط تقدم العرض لكل بند فيه عرض مفصل #}
+        {% for item in cart.items %}
+            {% if item.detailed_offers|length %}
+                <salla-cart-item-offers quantity="{{ item.quantity }}" item-id="{{ item.id }}"
+                                        product-price="{{ item.product_price }}"
+                                        offers="{{ item.detailed_offers|json_encode }}"></salla-cart-item-offers>
+            {% endif %}
+        {% endfor %}
+
+        {% if loyalty %}
+            <salla-loyalty-panel data-testid="store-cart-loyalty"
+                                 prize-points='{{ loyalty.prize.points }}'
+                                 prize-title='{{ loyalty.prize.title }}'></salla-loyalty-panel>
+        {% endif %}
+
+        {% if store.settings.cart.apply_coupon_enabled %}
+            <salla-cart-coupons data-testid="store-cart-coupons"></salla-cart-coupons>
+        {% endif %}
+
+        <salla-cart-summary-card data-testid="store-cart-summary"></salla-cart-summary-card>
+
+        <salla-tiered-offer data-testid="store-cart-tiered-offer"></salla-tiered-offer>
     </div>
 </section>
 {% endblock %}

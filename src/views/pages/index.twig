@@ -14,8 +14,8 @@
 {% block content %}
 {% set land   = theme.settings.get('bs_landing_enabled', true) %}
 {# افتراضي مدمج: الثيم يبدو كاملا قبل ان يضبط التاجر شيئا #}
-{% set img1   = theme.settings.get('bs_landing_image_1') ?: 'images/cover-1.jpg'|asset %}
-{% set img2   = theme.settings.get('bs_landing_image_2') ?: 'images/cover-2.jpg'|asset %}
+{% set img1   = theme.settings.get('bs_landing_image_1') ?: 'images/cover-1.webp'|asset %}
+{% set img2   = theme.settings.get('bs_landing_image_2') ?: 'images/cover-2.webp'|asset %}
 {% set t1     = theme.settings.get('bs_landing_title', 'اصالة تلبس') %}
 {% set t2     = theme.settings.get('bs_landing_title_2', 'وفخامة تورث') %}
 {% set sub    = theme.settings.get('bs_landing_sub') %}

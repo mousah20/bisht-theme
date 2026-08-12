@@ -2,4 +2,19 @@
 
 {% block customer_content %}
     <salla-order-details order-id="{{ order.id }}" data-testid="store-order-single"></salla-order-details>
+
+    {# ملخص مبالغ الطلب وزر تعديله وفرع الاستلام — مكونات سلة القياسية #}
+    <salla-order-totals-card data-testid="store-order-totals" order="{{ order }}"></salla-order-totals-card>
+    <salla-order-branch data-testid="store-order-branch" stack-cards></salla-order-branch>
+    <salla-edit-order-button data-testid="store-order-edit-btn"></salla-edit-order-button>
+
+    {# وسوم عوامل التقييم على البنود المقيمة #}
+    {% for item in order.items %}
+        {% if item.rating %}
+            <salla-review-factors-tags order-id="{{ order.id }}"
+                                       rating-id="{{ item.rating.id }}"
+                                       item-id="{{ item.id }}"
+                                       {% if item.product %}product-id="{{ item.product.id }}"{% endif %}></salla-review-factors-tags>
+        {% endif %}
+    {% endfor %}
 {% endblock %}

@@ -1,5 +1,10 @@
 {
     "bisht": {
+        "rail_summary": "Length :length · Shoulder :shoulder",
+        "rail_unknown_kept": ":count bishts have no declared sizes — we kept them visible.",
+        "fit_chosen": "We picked your size: length :length · shoulder :shoulder",
+        "fit_nearest": "Your exact size is unavailable — we picked the closest: :text",
+        "fit_unavailable": "Your size is unavailable for this bisht — made-to-measure suits you.",
         "enter_store": "Enter the store",
         "sections": "Sections",
         "all_bishts": "All bishts",

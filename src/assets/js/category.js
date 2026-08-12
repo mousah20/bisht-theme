@@ -11,6 +11,7 @@
 import { resolveFit } from './size-guide';
 import { saveFit, loadFit, clearFit } from './fit';
 import { ready } from './ready';
+import { t, registerI18n } from './i18n';
 
 function paintSummary(root, fit) {
   const out = root.querySelector('[data-rail-out]');
@@ -20,7 +21,7 @@ function paintSummary(root, fit) {
     return;
   }
   out.hidden = false;
-  out.querySelector('[data-rail-label]').textContent = `طول ${fit.length} · كتف ${fit.shoulder}`;
+  out.querySelector('[data-rail-label]').textContent = t('bisht.rail_summary', { length: fit.length, shoulder: fit.shoulder });
 }
 
 /**
@@ -49,7 +50,7 @@ function applyFilter(onlyMine) {
   const note = document.querySelector('[data-rail-unknown]');
   if (note) {
     note.hidden = !(onlyMine && unknown);
-    if (unknown) note.textContent = `${unknown} بشت بلا مقاسات معلنة — ابقيناها ظاهرة.`;
+    if (unknown) note.textContent = t('bisht.rail_unknown_kept', { count: unknown });
   }
 }
 
@@ -119,5 +120,6 @@ function mountRail(root) {
 }
 
 ready(() => {
+  registerI18n();
   document.querySelectorAll('[data-fit-rail]').forEach(mountRail);
 });

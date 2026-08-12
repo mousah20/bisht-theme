@@ -1,5 +1,10 @@
 {
     "bisht": {
+        "rail_summary": "طول :length · كتف :shoulder",
+        "rail_unknown_kept": ":count بشت بلا مقاسات معلنة — ابقيناها ظاهرة.",
+        "fit_chosen": "اخترنا مقاسك: طول :length · كتف :shoulder",
+        "fit_nearest": "لا يوجد مقاسك تماما — اخترنا الاقرب: :text",
+        "fit_unavailable": "مقاسك غير متاح في هذا البشت — الخياطة بالقياس تناسبك.",
         "enter_store": "ادخل المتجر",
         "sections": "الاقسام",
         "all_bishts": "كل البشوت",

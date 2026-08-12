@@ -7,6 +7,8 @@
         <span class="bs-num">{{ products.total ?? '' }}</span>
     </div>
 
+    {% hook 'product.index.before_products_group_with_filter' %}
+
     <salla-filters data-testid="store-filters"></salla-filters>
 
     {# عمود لا شبكة: بطاقة واحدة تملأ العين، والمقاسات سطر واحد #}
@@ -34,5 +36,9 @@
             </article>
         {% endfor %}
     </div>
+
+    {% hook 'product.index.after_products_group_with_filter' %}
+
+    {% hook 'product.index.after_testimonials' %}
 </section>
 {% endblock %}

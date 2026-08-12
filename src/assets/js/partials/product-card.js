@@ -7,8 +7,9 @@
  *     ‎custom-salla-product-card‎. البطاقة مسؤولية الثيم لا سلة، وغيابها يظهر
  *     كقائمة فارغة بلا خطأ واحد في وحدة التحكم.
  *   ٢ حمولة البطاقة لا تحمل ‎options‎ بل ‎has_options‎ فقط. فمصدر المقاسات:
- *     وسوم المنتج ان كتبها التاجر (صفر نداء)، والا تفاصيل المنتج تُجلب
- *     **عند ظهور البطاقة في الشاشة** ومرة واحدة لكل منتج.
+ *     وسوم المنتج ان كتبها التاجر، والا حمولة القائمة نفسها ان حملت خيارات.
+ *     ‼ لا نداء شبكة من البطاقة ابدا: ‎getDetails‎ لكل بطاقة يبطئ التصنيفات
+ *       والبحث (شرط مراجعة سلة)، وهو مسموح في صفحة المنتج والـquick view فقط.
  *
  * ثم نقارن بقياس الزائر المحفوظ:
  *   ــ طابق ⇒ «يناسب قامتك». لم يطابق وعندنا بياناته ⇒ «مقاس اخر» بلا ادعاء.
@@ -20,6 +21,7 @@
  */
 import { loadFit, optionMatchesFit, toAscii } from '../fit';
 import { ready } from '../ready';
+import { t, registerI18n } from '../i18n';
 
 const NUM = /(\d{2,3})/g;
 
@@ -45,42 +47,6 @@ function lengthRange(texts) {
   const lo = Math.min(...nums);
   const hi = Math.max(...nums);
   return lo === hi ? `${lo}` : `${lo} — ${hi}`;
-}
-
-const detailsCache = new Map();
-
-async function fetchSizeTexts(id) {
-  if (detailsCache.has(id)) return detailsCache.get(id);
-  const p = (async () => {
-    try {
-      if (!(window.salla && salla.product && salla.product.getDetails)) return [];
-      const r = await salla.product.getDetails(id);
-      return sizeTexts((r && (r.data || r)) || {});
-    } catch (e) {
-      return [];
-    }
-  })();
-  detailsCache.set(id, p);
-  return p;
-}
-
-function whenVisible(el, cb) {
-  if (!('IntersectionObserver' in window)) {
-    cb();
-    return;
-  }
-  const ob = new IntersectionObserver(
-    (ents) => {
-      ents.forEach((en) => {
-        if (en.isIntersecting) {
-          ob.disconnect();
-          cb();
-        }
-      });
-    },
-    { rootMargin: '200px' }
-  );
-  ob.observe(el);
 }
 
 const money = (v) => (window.salla && salla.money ? salla.money(v) : v);
@@ -113,7 +79,7 @@ class BishtProductCard extends HTMLElement {
       <div class="s-product-card-entry bs-pcard${out ? ' is-out' : ''}">
         <a class="s-product-card-image bs-pcard__media" href="${p.url}" aria-label="${p.name}">
           ${img ? `<img src="${img}" alt="${p.name}" loading="lazy">` : ''}
-          ${out ? '<div class="s-product-card-out-of-stock">نفدت الكمية</div>' : ''}
+          ${out ? `<div class="s-product-card-out-of-stock">${t('pages.products.out_of_stock')}</div>` : ''}
         </a>
         <div class="s-product-card-content bs-pcard__body">
           <h3 class="s-product-card-content-title"><a href="${p.url}">${p.name}</a></h3>
@@ -143,14 +109,14 @@ class BishtProductCard extends HTMLElement {
     this.querySelectorAll('.bs-fitb').forEach((b) => b.remove());
 
     const range = lengthRange(texts);
-    if (range) host.appendChild(this.badge('range', `طول ${range}`));
+    if (range) host.appendChild(this.badge('range', t('bisht.card_length', { range })));
 
     const fit = loadFit();
     if (!fit || !fit.length) return;
 
-    const match = texts.some((t) => optionMatchesFit(t, fit));
+    const match = texts.some((x) => optionMatchesFit(x, fit));
     this.dataset.bsMatch = match ? 'yes' : 'no';
-    host.appendChild(match ? this.badge('yes', 'يناسب قامتك') : this.badge('no', 'مقاس اخر'));
+    host.appendChild(match ? this.badge('yes', t('bisht.card_fits')) : this.badge('no', t('bisht.card_other_size')));
   }
 
   markFit() {
@@ -165,9 +131,9 @@ class BishtProductCard extends HTMLElement {
       return;
     }
 
-    // ٢ التفاصيل: عند الظهور فقط، ولمنتج له خيارات اصلا
-    if (!p.has_options || !p.id) return;
-    whenVisible(this, async () => this.paint(await fetchSizeTexts(p.id)));
+    // ٢ حمولة القائمة نفسها ان حملت خيارات — ولا نداء شبكة من البطاقة
+    const fromPayload = sizeTexts(p);
+    if (fromPayload.length) this.paint(fromPayload);
   }
 }
 
@@ -176,6 +142,7 @@ if (!customElements.get('custom-salla-product-card')) {
 }
 
 ready(() => {
+  registerI18n();
   // نتيجة الحاسبة تُعيد وسم البطاقات المعروضة حالا
   document.addEventListener('bisht:fit', () => {
     document.querySelectorAll('custom-salla-product-card[data-bs-ready="1"]').forEach((c) => {

@@ -9,6 +9,7 @@
 import { mountSizeGuide } from './size-guide';
 import { loadFit, optionMatchesFit, nearestOption } from './fit';
 import { ready } from './ready';
+import { t, registerI18n } from './i18n';
 
 /** يجمع العناصر من الصفحة وجذور الظل معا */
 function deepQuery(selector, root = document, out = []) {
@@ -97,15 +98,15 @@ function applyFit(fit) {
   if (srv.length) {
     const hit = srv.find((o) => optionMatchesFit(o.text, fit));
     if (hit && clickById(hit.id)) {
-      announce(`اخترنا مقاسك: طول ${fit.length} · كتف ${fit.shoulder}`);
+      announce(t('bisht.fit_chosen', { length: fit.length, shoulder: fit.shoulder }));
       return true;
     }
     const i = nearestOption(srv.map((o) => o.text), fit);
     if (i > -1 && clickById(srv[i].id)) {
-      announce(`لا يوجد مقاسك تماما — اخترنا الاقرب: ${srv[i].text}`, 'near');
+      announce(t('bisht.fit_nearest', { text: srv[i].text }), 'near');
       return true;
     }
-    announce('مقاسك غير متاح في هذا البشت — الخياطة بالقياس تناسبك.', 'none');
+    announce(t('bisht.fit_unavailable'), 'none');
     return false;
   }
 
@@ -116,19 +117,19 @@ function applyFit(fit) {
   const exact = opts.find((o) => optionMatchesFit(o.text, fit));
   if (exact) {
     exact.el.click();
-    announce(`اخترنا مقاسك: طول ${fit.length} · كتف ${fit.shoulder}`);
+    announce(t('bisht.fit_chosen', { length: fit.length, shoulder: fit.shoulder }));
     return true;
   }
 
   const i = nearestOption(opts.map((o) => o.text), fit);
   if (i > -1) {
     opts[i].el.click();
-    announce(`لا يوجد مقاسك تماما — اخترنا الاقرب: ${opts[i].text}`, 'near');
+    announce(t('bisht.fit_nearest', { text: opts[i].text }), 'near');
     return true;
   }
 
   // لا نخمّن: نصرّح بان القياس خارج المتاح ونحوّل الى الخياطة بالقياس
-  announce('مقاسك غير متاح في هذا البشت — الخياطة بالقياس تناسبك.', 'none');
+  announce(t('bisht.fit_unavailable'), 'none');
   return false;
 }
 
@@ -151,6 +152,7 @@ function whenOptionsReady(cb) {
 }
 
 ready(() => {
+  registerI18n();
   bindSizeButtons();
   document.querySelectorAll('[data-size-guide]').forEach(mountSizeGuide);
 

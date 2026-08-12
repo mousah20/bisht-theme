@@ -22,6 +22,7 @@
         </div>
 
         <div>
+            {% hook 'product.single.before_product_info' %}
             <h1 class="bs-row__name">{{ product.name }}</h1>
 
             {% if product.description %}
@@ -32,40 +33,70 @@
             <div class="bs-spec">
                 {% if product.brand.name %}<div><span>{{ trans('bisht.fabric') }}</span><b>{{ product.brand.name }}</b></div>{% endif %}
                 {% if product.weight %}<div><span>{{ trans('bisht.weight') }}</span><b>{{ product.weight }}</b></div>{% endif %}
-                {% if product.sku %}<div><span>SKU</span><b>{{ product.sku }}</b></div>{% endif %}
+                {% if product.sku %}<div><span>{{ trans('pages.products.sku') }}</span><b>{{ product.sku }}</b></div>{% endif %}
             </div>
 
-            {# الخيارات والسعر من سلة: لا نبني منطق التسعير ولا المخزون #}
-            <div style="margin-block-start:1.9rem">
-                {#
-                  اعلان صريح لما فعله المحرك: اختار، او اختار الاقرب، او لم يجد.
-                  اختيار صامت يبدو عطلا، والزائر يستحق ان يعرف من اختار له.
-                #}
-                <p class="bs-applied" data-fit-applied hidden></p>
+            {% if product.has_metadata %}
+                <salla-metadata data-testid="store-product-metadata"></salla-metadata>
+            {% endif %}
 
-                {% include 'pages.partials.product.options' %}
+            {# الخيارات والسعر من سلة: لا نبني منطق التسعير ولا المخزون.
+               النموذج يحمل الخيارات والكمية معا الى cart.addItem كما في رائد #}
+            <form data-testid="store-product-form" class="form product-form" enctype="multipart/form-data" method="post"
+                  onsubmit="return salla.form.onSubmit('cart.addItem', event)">
+                <input type="hidden" name="id" value="{{ product.id }}">
 
-                {% if theme.settings.get('bs_size_guide_enabled', true) %}
-                    <a class="bs-applied__link" href="#bs-fit">{{ trans('bisht.fit_cta') }}</a>
+                <div style="margin-block-start:1.9rem">
+                    {#
+                      اعلان صريح لما فعله المحرك: اختار، او اختار الاقرب، او لم يجد.
+                      اختيار صامت يبدو عطلا، والزائر يستحق ان يعرف من اختار له.
+                    #}
+                    <p class="bs-applied" data-fit-applied hidden></p>
+
+                    {% include 'pages.partials.product.options' %}
+
+                    {% if theme.settings.get('bs_size_guide_enabled', true) %}
+                        <a class="bs-applied__link" href="#bs-fit">{{ trans('bisht.fit_cta') }}</a>
+                    {% endif %}
+                </div>
+
+                <div class="bs-price" style="margin-block-start:1.6rem">
+                    <strong>{{ product.price|money }}</strong>
+                    {% if product.has_special_price %}<s>{{ product.regular_price|money }}</s>{% endif %}
+                    {% if product.quantity == 0 %}<em>{{ trans('bisht.sold_out') }}</em>{% endif %}
+                </div>
+
+                <salla-installment data-testid="store-product-installment" price="{{ product.price }}"></salla-installment>
+
+                <hr class="bs-rule">
+
+                {% if product.is_hidden_quantity or product.type == 'booking' %}
+                    <input type="hidden" value="1" name="quantity" aria-label="Quantity"/>
+                {% else %}
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-block-end:1.2rem">
+                        <span class="bs-eyebrow">{{ trans('pages.products.quantity') }}</span>
+                        <salla-quantity-input data-testid="store-product-quantity" max="{{ product.max_quantity }}"
+                                              value="1" name="quantity" aria-label="Quantity"></salla-quantity-input>
+                    </div>
                 {% endif %}
-            </div>
 
-            <div class="bs-price" style="margin-block-start:1.6rem">
-                <strong>{{ product.price|money }}</strong>
-                {% if product.has_special_price %}<s>{{ product.regular_price|money }}</s>{% endif %}
-                {% if product.quantity == 0 %}<em>{{ trans('bisht.sold_out') }}</em>{% endif %}
-            </div>
+                <div data-dock-anchor>
+                    <salla-add-product-button product-id="{{ product.id }}"
+                                              product-status="{{ product.status }}"
+                                              product-type="{{ product.type }}"
+                                              type="submit"
+                                              data-testid="store-add-to-cart">
+                        {{ trans('bisht.add_to_cart') }}
+                    </salla-add-product-button>
+                </div>
 
-            <hr class="bs-rule">
+                {% if product.is_giftable %}
+                    <salla-gifting data-testid="store-product-gifting" product-id="{{ product.id }}"
+                                   {{ product.is_require_shipping ? 'physical-products' : '' }}></salla-gifting>
+                {% endif %}
+            </form>
 
-            <div data-dock-anchor>
-                <salla-add-product-button product-id="{{ product.id }}"
-                                          product-status="{{ product.status }}"
-                                          product-type="{{ product.type }}"
-                                          data-testid="store-add-to-cart">
-                    {{ trans('bisht.add_to_cart') }}
-                </salla-add-product-button>
-            </div>
+            <salla-quick-order data-testid="store-product-quick-order" style="display:block;margin-block-start:1.1rem"></salla-quick-order>
 
             {% if theme.settings.get('bs_gift_enabled', true) %}
                 <p class="bs-lede" style="margin-block-start:1.1rem;font-size:.85rem">{{ trans('bisht.gift_note') }}</p>
@@ -84,7 +115,19 @@
         </section>
     {% endif %}
 
+    {% hook 'product.single.before_customer_reviews' %}
+
     <salla-comments data-testid="store-product-comments" product-id="{{ product.id }}"></salla-comments>
+
+    {% hook 'product.single.before_product_recommendations' %}
+
+    {# منتجات مشابهة: مصدر سلة الجاهز، والعنوان من مفاتيحها الاساسية #}
+    <section style="margin-block-start:4rem">
+        <salla-products-slider data-testid="store-product-related" source="related" source-value="{{ product.id }}"
+                               block-title="{{ trans('pages.products.similar_products') }}" display-all-url></salla-products-slider>
+    </section>
+
+    {% hook 'product.single.after_product_recommendations' %}
 </article>
 
 {# الشرفة السفلى: على الجوال زر الشراء لا يُبحث عنه #}
